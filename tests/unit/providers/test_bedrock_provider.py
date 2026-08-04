@@ -2,8 +2,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from askllm.errors import ProviderAuthError, ProviderError
-from askllm.providers.bedrock import BedrockProvider
+from llmbridge.errors import ProviderAuthError, ProviderError
+from llmbridge.providers.bedrock import BedrockProvider
 
 MODEL_ID = "anthropic.claude-haiku-4-5-v1:0"
 
@@ -160,7 +160,7 @@ def test_fetch_latest_models(monkeypatch):
         ]
     }
 
-    import askllm.providers.bedrock as bedrock_module
+    import llmbridge.providers.bedrock as bedrock_module
 
     monkeypatch.setattr(
         bedrock_module.boto3, "client", lambda *a, **k: fake_control_client

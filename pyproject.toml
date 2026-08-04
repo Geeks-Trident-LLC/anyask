@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "askllm"
+name = "llmbridge"
 version = "0.1.0"
 description = "Call an LLM provider, get its raw response back - one function, 17 vendors, zero routing/fallback magic"
 readme = "README.md"
@@ -70,15 +70,15 @@ keywords = [
 [project.optional-dependencies]
 # ------------------------------------------------------------
 # Per-provider extras: install only the SDK(s) a given provider needs,
-# e.g. `pip install askllm[anthropic]`. Provider SDK imports are lazy
-# (askllm/registry.py), so installing none of these still gives a fully
+# e.g. `pip install llmbridge[anthropic]`. Provider SDK imports are lazy
+# (llmbridge/registry.py), so installing none of these still gives a fully
 # working `ask()`/`get_provider()` API - just no provider can actually
 # generate until its extra (or [all]) is installed.
 # ------------------------------------------------------------
 openai = ["openai>=1.0.0"]
 
 # The following all reach their API through the OpenAI-compatible
-# chat-completions surface (askllm/providers/openai_compat.py) and need
+# chat-completions surface (llmbridge/providers/openai_compat.py) and need
 # nothing beyond the `openai` package itself.
 deepseek = ["openai>=1.0.0"]
 groq = ["openai>=1.0.0"]
@@ -154,20 +154,20 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Geeks-Trident-LLC/askllm"
-Repository = "https://github.com/Geeks-Trident-LLC/askllm"
-Issues = "https://github.com/Geeks-Trident-LLC/askllm/issues"
+Homepage = "https://github.com/Geeks-Trident-LLC/llmbridge"
+Repository = "https://github.com/Geeks-Trident-LLC/llmbridge"
+Issues = "https://github.com/Geeks-Trident-LLC/llmbridge/issues"
 
 [tool.setuptools]
 include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["askllm*"]
+include = ["llmbridge*"]
 exclude = ["tests*", "docs*", "examples*", "scripts*"]
 
 [tool.pytest.ini_options]
-addopts = "-ra --cov=askllm --cov-report=term-missing"
+addopts = "-ra --cov=llmbridge --cov-report=term-missing"
 testpaths = ["tests"]
 pythonpath = ["."]
 markers = [

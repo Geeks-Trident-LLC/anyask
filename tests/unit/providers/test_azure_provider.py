@@ -3,8 +3,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from askllm.errors import ProviderAuthError, ProviderError
-from askllm.providers.azure import AzureOpenAIProvider, build_azure_endpoint
+from llmbridge.errors import ProviderAuthError, ProviderError
+from llmbridge.providers.azure import AzureOpenAIProvider, build_azure_endpoint
 
 
 def _fake_result(

@@ -2,7 +2,7 @@
 """
 Ensures version consistency across:
 - pyproject.toml
-- askllm/__init__.py
+- llmbridge/__init__.py
 - .bumpversion.cfg
 
 Exit codes:
@@ -23,11 +23,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def extract_init_version() -> str:
-    """Return __version__ from askllm/__init__.py."""
-    text = (ROOT / "askllm" / "__init__.py").read_text()
+    """Return __version__ from llmbridge/__init__.py."""
+    text = (ROOT / "llmbridge" / "__init__.py").read_text()
     match = re.search(r'__version__\s*=\s*"([^"]+)"', text)
     if not match:
-        raise RuntimeError("Version not found in askllm/__init__.py")
+        raise RuntimeError("Version not found in llmbridge/__init__.py")
     return match.group(1)
 
 

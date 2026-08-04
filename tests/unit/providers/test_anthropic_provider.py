@@ -3,8 +3,8 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from askllm.errors import ProviderAuthError, ProviderError
-from askllm.providers.anthropic import AnthropicProvider
+from llmbridge.errors import ProviderAuthError, ProviderError
+from llmbridge.providers.anthropic import AnthropicProvider
 
 
 def _fake_response(

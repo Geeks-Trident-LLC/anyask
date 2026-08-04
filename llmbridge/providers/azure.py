@@ -1,4 +1,4 @@
-# askllm/providers/azure.py
+# llmbridge/providers/azure.py
 
 from __future__ import annotations
 
@@ -9,9 +9,9 @@ from typing import Any, List
 from azure.ai.inference import ChatCompletionsClient
 from azure.core.credentials import AzureKeyCredential
 
-from askllm.errors import ProviderAuthError, ProviderError
-from askllm.model_listing_mixin import ModelListingMixin
-from askllm.provider import AskResponse, Provider, TokenUsage
+from llmbridge.errors import ProviderAuthError, ProviderError
+from llmbridge.model_listing_mixin import ModelListingMixin
+from llmbridge.provider import AskResponse, Provider, TokenUsage
 
 
 def build_azure_endpoint(endpoint: str, deployment: str) -> str:
@@ -24,7 +24,7 @@ def build_azure_endpoint(endpoint: str, deployment: str) -> str:
     endpoint = endpoint.rstrip("/")
 
     # Case 1: Already a full deployment endpoint
-    # Example: https://.../openai/deployments/gpt-4.1-askllm
+    # Example: https://.../openai/deployments/gpt-4.1-llmbridge
     if "/openai/deployments/" in endpoint:
         return endpoint
 

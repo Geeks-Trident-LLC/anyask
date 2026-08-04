@@ -22,6 +22,6 @@ cohere: command-light
 vertexai: gemini-2.5-flash
 # Not a "cheap/fast" pick like every other provider's default - it's the
 # only OCI model ID confirmed against Oracle's own docs. Use
-# `askllm.list_models("oci", ...)` (requires real OCI credentials) to
+# `llmbridge.list_models("oci", ...)` (requires real OCI credentials) to
 # see OCI's live catalog.
 oci: meta.llama-3.3-70b-instruct

@@ -1,10 +1,10 @@
-# askllm/errors.py
+# llmbridge/errors.py
 
 from __future__ import annotations
 
 
 class AskLLMError(Exception):
-    """Base class for all askllm errors."""
+    """Base class for all llmbridge errors."""
 
 
 class ProviderNotFoundError(AskLLMError):

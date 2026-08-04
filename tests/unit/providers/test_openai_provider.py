@@ -3,8 +3,8 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from askllm.errors import ProviderAuthError, ProviderError
-from askllm.providers.openai import OpenAIProvider
+from llmbridge.errors import ProviderAuthError, ProviderError
+from llmbridge.providers.openai import OpenAIProvider
 
 
 def _fake_response(

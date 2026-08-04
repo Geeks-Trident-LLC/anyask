@@ -1,4 +1,4 @@
-# Contributing to askllm
+# Contributing to llmbridge
 
 Thank you for your interest in contributing!  
 This project values clarity, modularity, and professional developer experience.
@@ -10,8 +10,8 @@ This project values clarity, modularity, and professional developer experience.
 Clone the repository:
 
 ```bash
-git clone https://github.com/Geeks-Trident-LLC/askllm.git
-cd askllm
+git clone https://github.com/Geeks-Trident-LLC/llmbridge.git
+cd llmbridge
 ```
 
 Create a virtual environment:
@@ -42,7 +42,7 @@ pytest
 Coverage:
 
 ```bash
-pytest --cov=askllm
+pytest --cov=llmbridge
 ```
 
 ---
@@ -102,4 +102,4 @@ Include:
 
 ---
 
-Thank you for helping improve **askllm**!
+Thank you for helping improve **llmbridge**!

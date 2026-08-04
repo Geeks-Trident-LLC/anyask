@@ -1,4 +1,4 @@
-# askllm/providers/vertexai.py
+# llmbridge/providers/gemini.py
 
 from __future__ import annotations
 
@@ -8,61 +8,22 @@ from typing import Any, List
 
 import google.genai as genai
 
-from askllm.errors import ProviderAuthError, ProviderError
-from askllm.model_catalog import model as MODEL
-from askllm.model_listing_mixin import ModelListingMixin
-from askllm.provider import AskResponse, Provider, TokenUsage
+from llmbridge.errors import ProviderAuthError, ProviderError
+from llmbridge.model_catalog import model as MODEL
+from llmbridge.model_listing_mixin import ModelListingMixin
+from llmbridge.provider import AskResponse, Provider, TokenUsage
 
 
-class VertexAIProvider(Provider, ModelListingMixin):
-    """
-    Google Vertex AI provider (Shape B).
-
-    Reuses the SAME `google-genai` SDK as native Gemini - `google.genai
-    .Client` supports Vertex AI directly via `vertexai=True, project=...,
-    location=...`, so no new dependency is needed. Like Bedrock, Vertex AI
-    has no project-level API key: when no api_key/credentials are passed,
-    the SDK falls back to Google Cloud's Application Default Credentials
-    (a service account key file via GOOGLE_APPLICATION_CREDENTIALS,
-    `gcloud auth application-default login`, or workload identity on GCP
-    infra) - so this provider never handles a secret directly. `project`/
-    `region` (the "location" concept in Google's own SDK - reused here as
-    `region`, the same generic keyword used by Bedrock/OCI) are resolved
-    from the VERTEXAI_PROJECT/VERTEXAI_REGION env vars (not GCP's own
-    GOOGLE_CLOUD_PROJECT/GOOGLE_CLOUD_LOCATION, since both are always
-    passed explicitly to genai.Client() below).
-
-    Vertex AI serves the SAME Gemini model catalog as the native Gemini
-    Developer API under IDENTICAL model IDs (e.g. "gemini-2.5-pro") -
-    unlike Bedrock/OpenRouter, there is no distinguishing namespace
-    prefix, so Vertex AI must always be selected explicitly via
-    provider="vertexai".
-
-    generate()/generate_sync() mirror GeminiProvider's implementation
-    exactly (same underlying SDK method, same asyncio.to_thread wrapping
-    since generate_content() has no genuinely async variant used here) -
-    only client construction differs.
-    """
-
-    name = "vertexai"
+class GeminiProvider(Provider, ModelListingMixin):
+    name = "gemini"
 
     def __init__(self, **kwargs: Any) -> None:
-        project = kwargs.get("project") or os.getenv("VERTEXAI_PROJECT")
-        region = kwargs.get("region") or os.getenv("VERTEXAI_REGION")
+        api_key = kwargs.get("api_key") or os.getenv("GEMINI_API_KEY")
+        if not api_key:
+            raise ProviderAuthError("GEMINI_API_KEY is not set")
 
-        if not project:
-            raise ProviderAuthError(
-                "GCP project is not set (pass project= or set VERTEXAI_PROJECT)"
-            )
-        if not region:
-            raise ProviderAuthError(
-                "GCP location is not set (pass region= or set VERTEXAI_REGION)"
-            )
-
-        self.client = genai.Client(vertexai=True, project=project, location=region)
-        self.project = project
-        self.region = region
-        self.default_model = MODEL.vertexai.default
+        self.client = genai.Client(api_key=api_key)
+        self.default_model = MODEL.gemini.default
 
     def supports(self, model: str) -> bool:
         return True
@@ -149,16 +110,11 @@ class VertexAIProvider(Provider, ModelListingMixin):
             raise ProviderError(str(exc)) from exc
 
     @classmethod
-    def from_env(cls) -> "VertexAIProvider":
-        project = os.getenv("VERTEXAI_PROJECT")
-        region = os.getenv("VERTEXAI_REGION")
-
-        if not project:
-            raise ProviderAuthError("VERTEXAI_PROJECT is not set")
-        if not region:
-            raise ProviderAuthError("VERTEXAI_REGION is not set")
-
-        return cls(project=project, region=region)
+    def from_env(cls) -> "GeminiProvider":
+        api_key = os.getenv("GEMINI_API_KEY")
+        if not api_key:
+            raise ProviderAuthError("GEMINI_API_KEY is not set")
+        return cls(api_key=api_key)
 
     def fetch_latest_models(self) -> List[str]:
         models = self.client.models.list()

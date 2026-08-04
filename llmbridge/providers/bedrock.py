@@ -1,4 +1,4 @@
-# askllm/providers/bedrock.py
+# llmbridge/providers/bedrock.py
 
 from __future__ import annotations
 
@@ -8,10 +8,10 @@ from typing import Any, List
 
 import boto3
 
-from askllm.errors import ProviderAuthError, ProviderError
-from askllm.model_catalog import model as MODEL
-from askllm.model_listing_mixin import ModelListingMixin
-from askllm.provider import AskResponse, Provider, TokenUsage
+from llmbridge.errors import ProviderAuthError, ProviderError
+from llmbridge.model_catalog import model as MODEL
+from llmbridge.model_listing_mixin import ModelListingMixin
+from llmbridge.provider import AskResponse, Provider, TokenUsage
 
 
 class BedrockProvider(Provider, ModelListingMixin):

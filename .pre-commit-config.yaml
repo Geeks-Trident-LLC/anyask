@@ -33,5 +33,5 @@ repos:
         name: mypy (type check)
         additional_dependencies: [types-PyYAML]
         pass_filenames: false
-        args: ["askllm"]
+        args: ["llmbridge"]
         language_version: python3

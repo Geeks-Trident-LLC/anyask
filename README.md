@@ -1,4 +1,4 @@
-# askllm
+# llmbridge
 
 A single-responsibility Python package for one job: call an LLM provider, get its raw
 response back. No routing, no fallback, no retries - you always name the provider and
@@ -6,9 +6,9 @@ model explicitly, and you always get the same normalized `AskResponse` shape bac
 regardless of which of the 17 supported vendors you called.
 
 ```python
-import askllm
+import llmbridge
 
-response = askllm.ask(
+response = llmbridge.ask(
     "Say hello in one word.",
     provider="anthropic",
     model="claude-haiku-4-5-20251001",
@@ -24,13 +24,13 @@ print(response.model)            # "claude-haiku-4-5-20251001"
 
 ## Documentation
 
-Full documentation, including the [Providers](https://geeks-trident-llc.github.io/askllm/latest/providers/)
-reference table, [Quickstart](https://geeks-trident-llc.github.io/askllm/latest/getting-started/quickstart/),
-and generated [API Reference](https://geeks-trident-llc.github.io/askllm/latest/reference/),
+Full documentation, including the [Providers](https://geeks-trident-llc.github.io/llmbridge/latest/providers/)
+reference table, [Quickstart](https://geeks-trident-llc.github.io/llmbridge/latest/getting-started/quickstart/),
+and generated [API Reference](https://geeks-trident-llc.github.io/llmbridge/latest/reference/),
 is available at:
 
-- **Latest docs:** [https://geeks-trident-llc.github.io/askllm/latest/](https://geeks-trident-llc.github.io/askllm/latest/)
-- **All versions:** [https://geeks-trident-llc.github.io/askllm/](https://geeks-trident-llc.github.io/askllm/)
+- **Latest docs:** [https://geeks-trident-llc.github.io/llmbridge/latest/](https://geeks-trident-llc.github.io/llmbridge/latest/)
+- **All versions:** [https://geeks-trident-llc.github.io/llmbridge/](https://geeks-trident-llc.github.io/llmbridge/)
 
 ## Supported providers
 
@@ -40,17 +40,17 @@ is available at:
 
 ## Install
 
-A bare `pip install askllm` pulls in zero provider SDKs - only `PyYAML` (for the
+A bare `pip install llmbridge` pulls in zero provider SDKs - only `PyYAML` (for the
 built-in model catalog). Install the extra(s) for the provider(s) you actually use:
 
 ```bash
-pip install askllm[anthropic]
-pip install askllm[openai,gemini]
-pip install askllm[all]       # every provider SDK
+pip install llmbridge[anthropic]
+pip install llmbridge[openai,gemini]
+pip install llmbridge[all]       # every provider SDK
 ```
 
 Provider SDK imports are lazy: resolving one provider by name never imports another
-provider's SDK, so `import askllm` always succeeds even in an environment with no
+provider's SDK, so `import llmbridge` always succeeds even in an environment with no
 provider SDKs installed at all.
 
 ## API
@@ -73,9 +73,9 @@ any provider.
 ### `ask()` / `ask_async()`
 
 ```python
-response = askllm.ask("What is 2+2?", provider="openai", model="gpt-4o-mini")
+response = llmbridge.ask("What is 2+2?", provider="openai", model="gpt-4o-mini")
 
-response = await askllm.ask_async(
+response = await llmbridge.ask_async(
     "What is 2+2?", provider="openai", model="gpt-4o-mini", temperature=0.0,
 )
 ```
@@ -83,11 +83,11 @@ response = await askllm.ask_async(
 ### `list_models()` / `list_models_async()`
 
 ```python
-models = askllm.list_models("anthropic", api_key="sk-...")
+models = llmbridge.list_models("anthropic", api_key="sk-...")
 # ['claude-opus-4-8', 'claude-sonnet-4-5', ...]
 ```
 
-Raises `askllm.ProviderNotFoundError` if the resolved provider doesn't expose a live
+Raises `llmbridge.ProviderNotFoundError` if the resolved provider doesn't expose a live
 model-listing endpoint (e.g. Perplexity returns a static list instead).
 
 ### `get_provider()` - reusable provider instances
@@ -97,7 +97,7 @@ making many calls against the same provider/credentials - e.g. resolving dozens 
 prompts against one Anthropic API key in a loop - construct once and reuse:
 
 ```python
-provider = askllm.get_provider("anthropic", api_key="sk-...")
+provider = llmbridge.get_provider("anthropic", api_key="sk-...")
 
 for prompt in prompts:
     response = provider.generate_sync(prompt, model="claude-haiku-4-5-20251001")

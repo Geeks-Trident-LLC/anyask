@@ -1,4 +1,4 @@
-# askllm/model_catalog/model_registry.py
+# llmbridge/model_catalog/model_registry.py
 
 from functools import lru_cache
 from pathlib import Path

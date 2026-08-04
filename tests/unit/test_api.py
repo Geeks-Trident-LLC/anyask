@@ -2,10 +2,10 @@ from typing import Any, List
 
 import pytest
 
-from askllm import api as api_module
-from askllm.errors import ProviderNotFoundError
-from askllm.model_listing_mixin import ModelListingMixin
-from askllm.provider import AskResponse, Provider, TokenUsage
+from llmbridge import api as api_module
+from llmbridge.errors import ProviderNotFoundError
+from llmbridge.model_listing_mixin import ModelListingMixin
+from llmbridge.provider import AskResponse, Provider, TokenUsage
 
 
 class _FakeProvider(Provider):

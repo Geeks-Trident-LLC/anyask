@@ -1,7 +1,7 @@
-site_name: askllm
-site_url: https://geeks-trident-llc.github.io/askllm/
-repo_url: https://github.com/Geeks-Trident-LLC/askllm
-repo_name: Geeks-Trident-LLC/askllm
+site_name: llmbridge
+site_url: https://geeks-trident-llc.github.io/llmbridge/
+repo_url: https://github.com/Geeks-Trident-LLC/llmbridge
+repo_name: Geeks-Trident-LLC/llmbridge
 
 theme:
   name: material

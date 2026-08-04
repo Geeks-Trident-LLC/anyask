@@ -3,8 +3,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from askllm.errors import ProviderAuthError, ProviderError
-from askllm.providers.gemini import GeminiProvider
+from llmbridge.errors import ProviderAuthError, ProviderError
+from llmbridge.providers.gemini import GeminiProvider
 
 
 def _fake_response(

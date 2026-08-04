@@ -1,4 +1,4 @@
-# askllm/providers/oci.py
+# llmbridge/providers/oci.py
 
 from __future__ import annotations
 
@@ -8,10 +8,10 @@ from typing import Any, List
 
 import oci
 
-from askllm.errors import ProviderAuthError, ProviderError
-from askllm.model_catalog import model as MODEL
-from askllm.model_listing_mixin import ModelListingMixin
-from askllm.provider import AskResponse, Provider, TokenUsage
+from llmbridge.errors import ProviderAuthError, ProviderError
+from llmbridge.model_catalog import model as MODEL
+from llmbridge.model_listing_mixin import ModelListingMixin
+from llmbridge.provider import AskResponse, Provider, TokenUsage
 
 
 class OCIProvider(Provider, ModelListingMixin):
@@ -40,7 +40,7 @@ class OCIProvider(Provider, ModelListingMixin):
        xAI Grok models) vs CohereChatRequest (message=/chat_history=,
        text response - used for Cohere models). This provider
        deliberately supports ONLY the Generic format - Cohere models are
-       reachable through askllm's own `cohere` provider and via
+       reachable through llmbridge's own `cohere` provider and via
        `bedrock` instead, so this is a scope choice, not a gap.
 
     3. Needs a THIRD app-specific field beyond region: `compartment_id`

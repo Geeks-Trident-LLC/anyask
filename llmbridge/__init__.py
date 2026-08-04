@@ -1,4 +1,4 @@
-# askllm/__init__.py
+# llmbridge/__init__.py
 
 __version__ = "0.1.0"
 version = __version__

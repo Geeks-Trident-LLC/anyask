@@ -1,15 +1,15 @@
 ![banner](assets/images/banner.svg)
 
-`askllm` is a single-responsibility Python package for one job: call an LLM
+`llmbridge` is a single-responsibility Python package for one job: call an LLM
 provider, get its raw response back. No routing, no fallback, no retries —
 you always name the provider and model explicitly, and you always get the
 same normalized `AskResponse` shape back regardless of which of the 17
 supported vendors you called.
 
 ```python
-import askllm
+import llmbridge
 
-response = askllm.ask(
+response = llmbridge.ask(
     "Say hello in one word.",
     provider="anthropic",
     model="claude-haiku-4-5-20251001",
@@ -41,10 +41,10 @@ It is designed for:
   (kept raw and provider-specific, never coerced), `provider`, `model`,
   and the untouched `raw` SDK response
 - Lazy per-provider imports — installing none of the 17 provider extras
-  still gives a fully working `import askllm`; each provider's SDK is
+  still gives a fully working `import llmbridge`; each provider's SDK is
   only imported the moment it's actually used
 - No routing/fallback magic — you always name the provider and model;
-  `askllm` never silently swaps one for another
+  `llmbridge` never silently swaps one for another
 - `get_provider()` for reuse — construct a provider once and call
   `generate_sync()`/`generate()` many times instead of rebuilding an SDK
   client on every call

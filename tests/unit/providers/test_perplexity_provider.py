@@ -1,7 +1,7 @@
 import pytest
 
-from askllm.errors import ProviderAuthError
-from askllm.providers.perplexity import PerplexityProvider
+from llmbridge.errors import ProviderAuthError
+from llmbridge.providers.perplexity import PerplexityProvider
 
 
 def test_init_missing_api_key_raises(monkeypatch):

@@ -3,8 +3,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from askllm.errors import ProviderAuthError, ProviderError
-from askllm.providers.vertexai import VertexAIProvider
+from llmbridge.errors import ProviderAuthError, ProviderError
+from llmbridge.providers.vertexai import VertexAIProvider
 
 
 def _fake_response(

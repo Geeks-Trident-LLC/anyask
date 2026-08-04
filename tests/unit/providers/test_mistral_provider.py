@@ -3,8 +3,8 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from askllm.errors import ProviderAuthError, ProviderError
-from askllm.providers.mistral import MistralProvider
+from llmbridge.errors import ProviderAuthError, ProviderError
+from llmbridge.providers.mistral import MistralProvider
 
 
 def _fake_response(

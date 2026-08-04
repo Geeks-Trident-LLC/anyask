@@ -2,13 +2,13 @@ include LICENSE
 include README.md
 
 # Include YAML files inside the package
-recursive-include askllm *.yaml
+recursive-include llmbridge *.yaml
 
 # Include any JSON files (if you add them later)
-recursive-include askllm *.json
+recursive-include llmbridge *.json
 
 # Include any template files (future-proof)
-recursive-include askllm *.txt
+recursive-include llmbridge *.txt
 
 # Exclude tests, docs, examples from source distribution
 prune tests

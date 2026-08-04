@@ -3,9 +3,9 @@
 import re
 from pathlib import Path
 
-import askllm
+import llmbridge
 
-ROOT = Path(askllm.__file__).resolve().parent.parent
+ROOT = Path(llmbridge.__file__).resolve().parent.parent
 
 
 def extract_version_from_pyproject():
@@ -23,7 +23,7 @@ def normalize(version: str) -> str:
 
 def test_version_consistency():
     # Load version from __init__.py
-    init_file = ROOT / "askllm" / "__init__.py"
+    init_file = ROOT / "llmbridge" / "__init__.py"
     init_version = re.search(r'__version__ = "(.+?)"', init_file.read_text()).group(1)
 
     # Load version from pyproject.toml

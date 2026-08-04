@@ -3,8 +3,8 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from askllm.errors import ProviderAuthError, ProviderError
-from askllm.providers.cohere import CohereProvider
+from llmbridge.errors import ProviderAuthError, ProviderError
+from llmbridge.providers.cohere import CohereProvider
 
 
 def _fake_response(
