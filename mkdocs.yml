@@ -45,6 +45,8 @@ nav:
 
   - Providers: providers/index.md
 
+  - CLI Guide: cli/index.md
+
   - Guides:
       - Dependency Footprint: guides/dependency-footprint.md
 

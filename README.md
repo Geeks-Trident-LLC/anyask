@@ -56,8 +56,8 @@ provider SDKs installed at all.
 ## API
 
 ```python
-def ask(prompt: str, *, provider: str, model: str, **kwargs) -> AskResponse: ...
-async def ask_async(prompt: str, *, provider: str, model: str, **kwargs) -> AskResponse: ...
+def ask(prompt: str, *, provider: str, model: str, reasoning: bool = False, **kwargs) -> AskResponse: ...
+async def ask_async(prompt: str, *, provider: str, model: str, reasoning: bool = False, **kwargs) -> AskResponse: ...
 def list_models(provider: str, **kwargs) -> list[str]: ...
 async def list_models_async(provider: str, **kwargs) -> list[str]: ...
 def get_provider(provider: str, **config) -> Provider: ...
@@ -77,6 +77,20 @@ response = anyask.ask("What is 2+2?", provider="openai", model="gpt-4o-mini")
 
 response = await anyask.ask_async(
     "What is 2+2?", provider="openai", model="gpt-4o-mini", temperature=0.0,
+)
+```
+
+Pass `reasoning=True` for extended/deliberate reasoning, using each provider's own
+real mechanism (Anthropic extended thinking, OpenAI/OpenAI-compatible
+`reasoning_effort`, Gemini/Vertex AI thinking budgets, Bedrock's Claude thinking
+field). Azure, Mistral, Cohere, and OCI have no documented per-call toggle and raise
+`ProviderNotFoundError` rather than silently ignoring it - see the
+[Providers](https://geeks-trident-llc.github.io/anyask/latest/providers/#reasoning-support)
+page for the full support matrix.
+
+```python
+response = anyask.ask(
+    "What's 17 * 24?", provider="anthropic", model="claude-opus-4-8", reasoning=True,
 )
 ```
 
@@ -118,6 +132,22 @@ class ProviderAuthError(ProviderError): ...       # missing/invalid credentials 
 Every provider call failure is raised as `ProviderError(...) from exc`, so
 `err.__cause__` is always the original SDK exception - inspect it if you need
 vendor-specific error details (status codes, error types, etc.).
+
+## CLI
+
+A small `anyask` console script installs alongside the Python API - it doesn't call
+any provider, it only checks readiness (SDK installed, credentials resolve) without
+making a network call:
+
+```bash
+anyask --version
+anyask check anthropic                    # exit 0/1
+anyask check bedrock --region us-east-1
+anyask ready                              # sweep every provider (always exits 0)
+```
+
+See the [CLI Guide](https://geeks-trident-llc.github.io/anyask/latest/cli/) for the
+full command reference.
 
 ## License
 

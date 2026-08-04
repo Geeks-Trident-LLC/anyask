@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- `anyask` console script: `anyask --version`/`anyask version`, `anyask check
+  <provider>` (construct one provider without a network call, reporting whether
+  its SDK is installed and credentials resolve; exits 0/1), and `anyask ready`
+  (sweep every provider using only environment-variable credentials; always
+  exits 0 - a status report, not a gate). Built on stdlib `argparse`, not
+  `click`, to keep the bare install at 2 packages.
 - Consistent `temperature=0.2`/`max_tokens=2048` defaults across all 17
   providers (previously only Anthropic, Mistral, Cohere, Bedrock, and
   OCI set these; OpenAI, the 9 OpenAI-compatible vendors, Gemini, Vertex

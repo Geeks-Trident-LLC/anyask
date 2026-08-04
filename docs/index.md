@@ -48,11 +48,15 @@ It is designed for:
 - `get_provider()` for reuse — construct a provider once and call
   `generate_sync()`/`generate()` many times instead of rebuilding an SDK
   client on every call
+- `anyask check <provider>`/`anyask ready` — a small CLI that answers "is
+  this provider's SDK installed and its credentials set," without making
+  a network call
 
 ## Explore the Docs
 
 - [Installation](getting-started/installation.md)
 - [Quickstart](getting-started/quickstart.md)
 - [Providers](providers/index.md)
+- [CLI Guide](cli/index.md)
 - [Dependency Footprint](guides/dependency-footprint.md)
 - [API Reference](reference/index.md)
