@@ -3,9 +3,9 @@ from unittest.mock import MagicMock
 
 import pytest
 
-import llmbridge.providers.oci as oci_provider_module
-from llmbridge.errors import ProviderAuthError, ProviderError
-from llmbridge.providers.oci import OCIProvider
+import anyask.providers.oci as oci_provider_module
+from anyask.errors import ProviderAuthError, ProviderError
+from anyask.providers.oci import OCIProvider
 
 MODEL_ID = "meta.llama-3.3-70b-instruct"
 COMPARTMENT_ID = "ocid1.compartment.oc1..fake"

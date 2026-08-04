@@ -1,4 +1,4 @@
-# llmbridge/providers/openai_compat.py
+# anyask/providers/openai_compat.py
 
 from __future__ import annotations
 
@@ -6,8 +6,8 @@ from typing import Any
 
 from openai import AsyncOpenAI, OpenAI
 
-from llmbridge.errors import ProviderError
-from llmbridge.provider import AskResponse, Provider, TokenUsage
+from anyask.errors import ProviderError
+from anyask.provider import AskResponse, Provider, TokenUsage
 
 
 class OpenAICompatProvider(Provider):

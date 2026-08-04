@@ -1,9 +1,9 @@
 # Dependency Footprint
 
-`llmbridge` supports 17 LLM providers, but no single install needs all of
-their SDKs at once. `pip install llmbridge` installs only `PyYAML` (used by
+`anyask` supports 17 LLM providers, but no single install needs all of
+their SDKs at once. `pip install anyask` installs only `PyYAML` (used by
 the built-in default-model catalog) — every provider SDK is an opt-in
-extra via `pip install llmbridge[<provider>]` (see
+extra via `pip install anyask[<provider>]` (see
 [Installation](../getting-started/installation.md)). This page documents
 what a representative sample of extras actually pull in, verified with
 real, clean-venv installs — useful when you're sizing a container image
@@ -12,24 +12,24 @@ or just curious where the weight goes.
 ## Bare install: 2 packages
 
 ```bash
-pip install llmbridge
+pip install anyask
 ```
 
-Installs only `llmbridge` itself plus its single dependency, `PyYAML`. This
-is fully functional on its own — `import llmbridge`, `llmbridge.ask(...)`,
-`llmbridge.get_provider(...)` all work for constructing/inspecting objects.
+Installs only `anyask` itself plus its single dependency, `PyYAML`. This
+is fully functional on its own — `import anyask`, `anyask.ask(...)`,
+`anyask.get_provider(...)` all work for constructing/inspecting objects.
 Only *calling* a provider requires its extra:
 
 ```pycon
->>> import llmbridge
->>> llmbridge.ask("hi", provider="anthropic", model="claude-haiku-4-5-20251001")
+>>> import anyask
+>>> anyask.ask("hi", provider="anthropic", model="claude-haiku-4-5-20251001")
 ImportError: Provider 'anthropic' requires additional dependencies that
-are not installed. Install with: pip install llmbridge[anthropic]
+are not installed. Install with: pip install anyask[anthropic]
 ```
 
 ## Per-provider package counts (measured sample)
 
-| Extra | Total packages (incl. llmbridge) | What makes up the difference |
+| Extra | Total packages (incl. anyask) | What makes up the difference |
 |---|---:|---|
 | `[bedrock]` | 9 | Reuses `boto3`'s own credential chain — no `httpx`/`pydantic` stack, just `boto3`/`botocore` + their small support libs (`jmespath`, `s3transfer`, `python-dateutil`, `six`, `urllib3`) |
 | `[oci]` | 15 | Per-request cryptographic signing needs `cryptography` + `pyOpenSSL` + `PyJWT` (no bearer API key at all), plus `circuitbreaker`/`crc32c`/`pytz` support libs |
@@ -40,7 +40,7 @@ are not installed. Install with: pip install llmbridge[anthropic]
 `[openai]` also covers `deepseek`, `groq`, `xai`, `together`, `fireworks`,
 `cerebras`, `perplexity`, `openrouter`, and `moonshot` at no extra
 package cost — all nine subclass the same OpenAI-compatible chat-
-completions client (`llmbridge/providers/openai_compat.py`) and need
+completions client (`anyask/providers/openai_compat.py`) and need
 nothing beyond the `openai` package itself.
 
 `[gemini]`/`[vertexai]` (both use `google-genai`), `[azure]`, and
@@ -82,9 +82,9 @@ a fresh, empty virtual environment (not from reading `pyproject.toml`
 alone), followed by `pip list`:
 
 ```bash
-python -m venv /tmp/llmbridge-check-<extra>
-/tmp/llmbridge-check-<extra>/bin/pip install -e ".[<extra>]"
-/tmp/llmbridge-check-<extra>/bin/pip list
+python -m venv /tmp/anyask-check-<extra>
+/tmp/anyask-check-<extra>/bin/pip install -e ".[<extra>]"
+/tmp/anyask-check-<extra>/bin/pip list
 ```
 
 Verified extras: bare (no extra), `anthropic`, `openai`, `bedrock`,
@@ -92,5 +92,5 @@ Verified extras: bare (no extra), `anthropic`, `openai`, `bedrock`,
 unusual) called out above. Counts were produced on Python 3.14; exact
 transitive versions will differ slightly on Python 3.9/3.12 (this
 package's actual CI matrix), but the package *count* and relative
-ordering should hold. See `llmbridge/registry.py` for the lazy-loading
+ordering should hold. See `anyask/registry.py` for the lazy-loading
 mechanism that makes per-extra installs possible in the first place.

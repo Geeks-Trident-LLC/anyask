@@ -3,8 +3,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from llmbridge.errors import ProviderAuthError
-from llmbridge.providers.moonshot import MoonshotProvider
+from anyask.errors import ProviderAuthError
+from anyask.providers.moonshot import MoonshotProvider
 
 
 def test_init_missing_api_key_raises(monkeypatch):

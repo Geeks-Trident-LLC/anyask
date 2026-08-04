@@ -1,4 +1,4 @@
-# llmbridge/provider.py
+# anyask/provider.py
 
 from __future__ import annotations
 
@@ -50,7 +50,7 @@ class Provider(ABC):
     accepts `**kwargs` and pulls only the keys it needs (e.g. `api_key`,
     `region`), ignoring the rest. This lets callers pass one uniform
     config dict to any provider class without an if/elif dispatch on
-    provider name. See `llmbridge/api.py`'s `_CONSTRUCTION_KEYS` for the
+    provider name. See `anyask/api.py`'s `_CONSTRUCTION_KEYS` for the
     known keyword vocabulary.
 
     A provider instance is reusable across multiple `model=` values of

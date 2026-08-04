@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   Vertex AI, Azure, Mistral, Bedrock, Cohere, OCI, and nine
   OpenAI-compatible vendors: DeepSeek, Groq, xAI, Together AI, Fireworks
   AI, Cerebras, Perplexity, OpenRouter, Moonshot)
-- Lazy per-provider SDK imports (`llmbridge/registry.py`) — `import llmbridge`
+- Lazy per-provider SDK imports (`anyask/registry.py`) — `import anyask`
   never requires any provider SDK to be installed; each provider's
   extra is only needed once that provider is actually used
 - `AskLLMError`/`ProviderNotFoundError`/`ProviderError`/

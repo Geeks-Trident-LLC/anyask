@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Verify that pyproject.toml and llmbridge/__init__.py versions match
+    Verify that pyproject.toml and anyask/__init__.py versions match
 #>
 
 # Read version from pyproject.toml
@@ -10,12 +10,12 @@ print(tomllib.load(open("pyproject.toml", "rb"))["project"]["version"])
 "@ | python
 $pyVersion = $pyVersion.Trim()
 
-# Read version from local llmbridge/__init__.py (no install required)
+# Read version from local anyask/__init__.py (no install required)
 $initVersion = @"
 import sys, importlib.util, pathlib
 
-pkg = pathlib.Path("llmbridge/__init__.py").resolve()
-spec = importlib.util.spec_from_file_location("llmbridge", pkg)
+pkg = pathlib.Path("anyask/__init__.py").resolve()
+spec = importlib.util.spec_from_file_location("anyask", pkg)
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 print(mod.__version__)

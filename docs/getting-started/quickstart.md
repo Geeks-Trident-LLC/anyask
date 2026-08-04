@@ -10,7 +10,7 @@ You need an API key for at least one supported provider, set as an
 environment variable. This guide uses Anthropic as the running example.
 
 ```bash
-pip install llmbridge[anthropic]
+pip install anyask[anthropic]
 export ANTHROPIC_API_KEY=sk-ant-...
 ```
 
@@ -20,9 +20,9 @@ providers and their credential environment variables.
 ## 1. `ask()` — a single synchronous call
 
 ```python
-import llmbridge
+import anyask
 
-response = llmbridge.ask(
+response = anyask.ask(
     "Say hello in one word.",
     provider="anthropic",
     model="claude-haiku-4-5-20251001",
@@ -39,7 +39,7 @@ print(response.model)            # "claude-haiku-4-5-20251001"
 `ANTHROPIC_API_KEY` environment variable:
 
 ```python
-response = llmbridge.ask(
+response = anyask.ask(
     "Say hello in one word.",
     provider="anthropic",
     model="claude-haiku-4-5-20251001",
@@ -57,11 +57,11 @@ unchanged.
 
 ```python
 import asyncio
-import llmbridge
+import anyask
 
 
 async def main():
-    response = await llmbridge.ask_async(
+    response = await anyask.ask_async(
         "Say hello in one word.",
         provider="anthropic",
         model="claude-haiku-4-5-20251001",
@@ -76,12 +76,12 @@ asyncio.run(main())
 ## 3. `list_models()` — see what a provider currently serves
 
 ```python
-models = llmbridge.list_models("anthropic")
+models = anyask.list_models("anthropic")
 print(models)   # ['claude-opus-4-8', 'claude-sonnet-4-5', ...]
 ```
 
 Not every provider supports live model listing — `list_models()` raises
-`llmbridge.ProviderNotFoundError` for providers with no listing endpoint
+`anyask.ProviderNotFoundError` for providers with no listing endpoint
 (e.g. Perplexity).
 
 ## 4. `get_provider()` — reuse a client across many calls
@@ -91,7 +91,7 @@ call. If you're making many calls against the same provider/credentials,
 construct once and reuse:
 
 ```python
-provider = llmbridge.get_provider("anthropic")
+provider = anyask.get_provider("anthropic")
 
 for prompt in ["What is 2+2?", "What is the capital of France?"]:
     response = provider.generate_sync(prompt, model="claude-haiku-4-5-20251001")

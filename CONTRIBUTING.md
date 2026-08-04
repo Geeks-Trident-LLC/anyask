@@ -1,4 +1,4 @@
-# Contributing to llmbridge
+# Contributing to anyask
 
 Thank you for your interest in contributing!  
 This project values clarity, modularity, and professional developer experience.
@@ -10,8 +10,8 @@ This project values clarity, modularity, and professional developer experience.
 Clone the repository:
 
 ```bash
-git clone https://github.com/Geeks-Trident-LLC/llmbridge.git
-cd llmbridge
+git clone https://github.com/Geeks-Trident-LLC/anyask.git
+cd anyask
 ```
 
 Create a virtual environment:
@@ -42,7 +42,7 @@ pytest
 Coverage:
 
 ```bash
-pytest --cov=llmbridge
+pytest --cov=anyask
 ```
 
 ---
@@ -102,4 +102,4 @@ Include:
 
 ---
 
-Thank you for helping improve **llmbridge**!
+Thank you for helping improve **anyask**!

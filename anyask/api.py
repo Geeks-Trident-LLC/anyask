@@ -1,14 +1,14 @@
-# llmbridge/api.py
+# anyask/api.py
 
 from __future__ import annotations
 
 import asyncio
 from typing import Any, List
 
-from llmbridge.errors import ProviderNotFoundError
-from llmbridge.model_listing_mixin import ModelListingMixin
-from llmbridge.provider import AskResponse, Provider
-from llmbridge.registry import registry
+from anyask.errors import ProviderNotFoundError
+from anyask.model_listing_mixin import ModelListingMixin
+from anyask.provider import AskResponse, Provider
+from anyask.registry import registry
 
 # Construction keys: split out of ask()/ask_async()/list_models()'s **kwargs
 # and routed to the provider's constructor instead of generate()/

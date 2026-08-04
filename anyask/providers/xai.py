@@ -1,13 +1,13 @@
-# llmbridge/providers/xai.py
+# anyask/providers/xai.py
 
 from __future__ import annotations
 
 import os
 from typing import Any, List
 
-from llmbridge.errors import ProviderAuthError
-from llmbridge.model_catalog import model as MODEL
-from llmbridge.model_listing_mixin import ModelListingMixin
+from anyask.errors import ProviderAuthError
+from anyask.model_catalog import model as MODEL
+from anyask.model_listing_mixin import ModelListingMixin
 
 from .openai_compat import OpenAICompatProvider
 

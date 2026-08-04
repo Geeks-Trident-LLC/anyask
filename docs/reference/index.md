@@ -6,7 +6,7 @@ This reference is generated automatically from docstrings via
 
 ## Functions
 
-::: llmbridge.api
+::: anyask.api
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -15,7 +15,7 @@ This reference is generated automatically from docstrings via
 
 ## Types
 
-::: llmbridge.provider
+::: anyask.provider
     options:
       show_root_heading: false
       show_root_toc_entry: false
@@ -23,7 +23,7 @@ This reference is generated automatically from docstrings via
 
 ## Errors
 
-::: llmbridge.errors
+::: anyask.errors
     options:
       show_root_heading: false
       show_root_toc_entry: false

@@ -3,8 +3,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from llmbridge.errors import ProviderAuthError
-from llmbridge.providers.openrouter import OpenRouterProvider
+from anyask.errors import ProviderAuthError
+from anyask.providers.openrouter import OpenRouterProvider
 
 
 def test_init_missing_api_key_raises(monkeypatch):

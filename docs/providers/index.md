@@ -1,13 +1,13 @@
 # Providers
 
-llmbridge integrates 17 LLM providers behind one interface — `ask()`,
+anyask integrates 17 LLM providers behind one interface — `ask()`,
 `ask_async()`, `list_models()`, `list_models_async()`, and
 `get_provider()` all take the same `provider="..."` value. Most providers
 just need an API key; three cloud-gateway providers (Bedrock, Vertex AI,
 OCI) use their own ambient credential chains instead and take extra
 constructor parameters in place of `api_key`.
 
-There is no automatic routing or fallback anywhere in llmbridge — `provider`
+There is no automatic routing or fallback anywhere in anyask — `provider`
 is always an explicit, required argument on every call.
 
 ## All providers
@@ -36,9 +36,9 @@ is always an explicit, required argument on every call.
 `openai`'s extra also installs the SDK backing nine OpenAI-compatible
 vendors (`deepseek`, `groq`, `xai`, `together`, `fireworks`, `cerebras`,
 `perplexity`, `openrouter`, `moonshot`) — they share one HTTP client
-implementation (`llmbridge/providers/openai_compat.py`) and differ only in
+implementation (`anyask/providers/openai_compat.py`) and differ only in
 base URL, env var, and default model. Each still needs its own extra
-installed (e.g. `pip install llmbridge[groq]`) since credentials and default
+installed (e.g. `pip install anyask[groq]`) since credentials and default
 models are provider-specific, but no additional package beyond `openai`
 itself is pulled in.
 
@@ -49,12 +49,12 @@ environment variable. There is no config-file fallback.
 ## Two implementation shapes
 
 Internally, providers fall into two groups — this only matters if you're
-extending llmbridge itself, not for calling it:
+extending anyask itself, not for calling it:
 
 - **Shape A** — OpenAI-compatible chat-completions API (DeepSeek, Groq,
   xAI, Together AI, Fireworks AI, Cerebras, Perplexity, OpenRouter,
   Moonshot). These share one implementation
-  (`llmbridge/providers/openai_compat.py`) and differ only in base URL, env
+  (`anyask/providers/openai_compat.py`) and differ only in base URL, env
   var, and default model.
 - **Shape B** — a native SDK with its own request/response shape (OpenAI,
   Anthropic, Gemini, Azure, Mistral, Bedrock, Cohere, Vertex AI, OCI).
@@ -69,7 +69,7 @@ extending llmbridge itself, not for calling it:
 `gemini` provider (e.g. `gemini-2.5-pro` means the same thing to both).
 **OCI** uses `vendor.model-name` IDs (`meta.llama-3.3-70b-instruct`)
 that share the `meta.` vendor prefix with Bedrock's own re-hosted model
-namespace. Since llmbridge has no auto-routing to begin with, this is never
+namespace. Since anyask has no auto-routing to begin with, this is never
 ambiguous in practice — you always select `provider="vertexai"` or
 `provider="oci"` explicitly — but it's worth knowing if you're
 cross-referencing model IDs between providers.

@@ -1,6 +1,6 @@
 import pytest
 
-from llmbridge.model_listing_mixin import ModelListingMixin
+from anyask.model_listing_mixin import ModelListingMixin
 
 
 def test_fetch_latest_models_base_raises_not_implemented():

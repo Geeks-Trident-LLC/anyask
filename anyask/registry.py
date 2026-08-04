@@ -1,11 +1,11 @@
-# llmbridge/registry.py
+# anyask/registry.py
 
 from __future__ import annotations
 
 from importlib import import_module
 from typing import Dict, NamedTuple, Optional, Type
 
-from llmbridge.provider import Provider
+from anyask.provider import Provider
 
 
 class _LazySpec(NamedTuple):
@@ -21,38 +21,38 @@ class _LazySpec(NamedTuple):
 # Each provider module does its own top-level `import <sdk>` (e.g.
 # `import boto3`, `from cohere import ...`). Importing that module is
 # deferred until a caller actually asks for that provider by name, so
-# `import llmbridge` and building this registry never requires every
+# `import anyask` and building this registry never requires every
 # provider SDK to be installed - only the one(s) actually used.
 _LAZY_PROVIDERS: Dict[str, _LazySpec] = {
-    "openai": _LazySpec("llmbridge.providers.openai", "OpenAIProvider", "openai"),
+    "openai": _LazySpec("anyask.providers.openai", "OpenAIProvider", "openai"),
     "openai_compat": _LazySpec(
-        "llmbridge.providers.openai_compat", "OpenAICompatProvider", "openai"
+        "anyask.providers.openai_compat", "OpenAICompatProvider", "openai"
     ),
-    "azure": _LazySpec("llmbridge.providers.azure", "AzureOpenAIProvider", "azure"),
+    "azure": _LazySpec("anyask.providers.azure", "AzureOpenAIProvider", "azure"),
     "anthropic": _LazySpec(
-        "llmbridge.providers.anthropic", "AnthropicProvider", "anthropic"
+        "anyask.providers.anthropic", "AnthropicProvider", "anthropic"
     ),
-    "gemini": _LazySpec("llmbridge.providers.gemini", "GeminiProvider", "gemini"),
-    "deepseek": _LazySpec("llmbridge.providers.deepseek", "DeepSeekProvider", "deepseek"),
-    "groq": _LazySpec("llmbridge.providers.groq", "GroqProvider", "groq"),
-    "xai": _LazySpec("llmbridge.providers.xai", "XAIProvider", "xai"),
-    "together": _LazySpec("llmbridge.providers.together", "TogetherProvider", "together"),
+    "gemini": _LazySpec("anyask.providers.gemini", "GeminiProvider", "gemini"),
+    "deepseek": _LazySpec("anyask.providers.deepseek", "DeepSeekProvider", "deepseek"),
+    "groq": _LazySpec("anyask.providers.groq", "GroqProvider", "groq"),
+    "xai": _LazySpec("anyask.providers.xai", "XAIProvider", "xai"),
+    "together": _LazySpec("anyask.providers.together", "TogetherProvider", "together"),
     "fireworks": _LazySpec(
-        "llmbridge.providers.fireworks", "FireworksProvider", "fireworks"
+        "anyask.providers.fireworks", "FireworksProvider", "fireworks"
     ),
-    "cerebras": _LazySpec("llmbridge.providers.cerebras", "CerebrasProvider", "cerebras"),
+    "cerebras": _LazySpec("anyask.providers.cerebras", "CerebrasProvider", "cerebras"),
     "perplexity": _LazySpec(
-        "llmbridge.providers.perplexity", "PerplexityProvider", "perplexity"
+        "anyask.providers.perplexity", "PerplexityProvider", "perplexity"
     ),
     "openrouter": _LazySpec(
-        "llmbridge.providers.openrouter", "OpenRouterProvider", "openrouter"
+        "anyask.providers.openrouter", "OpenRouterProvider", "openrouter"
     ),
-    "moonshot": _LazySpec("llmbridge.providers.moonshot", "MoonshotProvider", "moonshot"),
-    "mistral": _LazySpec("llmbridge.providers.mistral", "MistralProvider", "mistral"),
-    "bedrock": _LazySpec("llmbridge.providers.bedrock", "BedrockProvider", "bedrock"),
-    "cohere": _LazySpec("llmbridge.providers.cohere", "CohereProvider", "cohere"),
-    "vertexai": _LazySpec("llmbridge.providers.vertexai", "VertexAIProvider", "vertexai"),
-    "oci": _LazySpec("llmbridge.providers.oci", "OCIProvider", "oci"),
+    "moonshot": _LazySpec("anyask.providers.moonshot", "MoonshotProvider", "moonshot"),
+    "mistral": _LazySpec("anyask.providers.mistral", "MistralProvider", "mistral"),
+    "bedrock": _LazySpec("anyask.providers.bedrock", "BedrockProvider", "bedrock"),
+    "cohere": _LazySpec("anyask.providers.cohere", "CohereProvider", "cohere"),
+    "vertexai": _LazySpec("anyask.providers.vertexai", "VertexAIProvider", "vertexai"),
+    "oci": _LazySpec("anyask.providers.oci", "OCIProvider", "oci"),
 }
 
 
@@ -77,7 +77,7 @@ class ProviderRegistry:
         except ImportError as ex:
             raise ImportError(
                 f"Provider {name!r} requires additional dependencies that are "
-                f"not installed. Install with: pip install llmbridge[{spec.extra}]"
+                f"not installed. Install with: pip install anyask[{spec.extra}]"
             ) from ex
 
         provider_cls = getattr(module, spec.class_name)
