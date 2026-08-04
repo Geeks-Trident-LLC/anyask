@@ -1,6 +1,6 @@
 # anyask/__init__.py
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 version = __version__
 
 from .api import (  # noqa: E402
