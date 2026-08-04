@@ -1,0 +1,27 @@
+# Default model ID per provider, used as the fallback `default_model`
+# value in each provider class (see model_catalog/__init__.py and
+# model_registry.py). Not a quality/speed opinion - just "a real,
+# working model ID for this provider" for callers that don't pass a
+# model explicitly, and for the test suite to reference instead of
+# hardcoding raw model strings everywhere.
+openai: gpt-4o-mini
+anthropic: claude-haiku-4-5-20251001
+gemini: gemini-2.5-flash
+deepseek: deepseek-v4-flash
+groq: llama-3.1-8b-instant
+xai: grok-3-mini
+together: meta-llama/Llama-3.1-8B-Instruct-Turbo
+fireworks: accounts/fireworks/models/llama-v3p1-8b-instruct
+cerebras: llama3.1-8b
+perplexity: sonar
+openrouter: google/gemini-2.5-flash-lite
+moonshot: moonshot-v1-8k
+mistral: mistral-small-latest
+bedrock: anthropic.claude-haiku-4-5-v1:0
+cohere: command-light
+vertexai: gemini-2.5-flash
+# Not a "cheap/fast" pick like every other provider's default - it's the
+# only OCI model ID confirmed against Oracle's own docs. Use
+# `askllm.list_models("oci", ...)` (requires real OCI credentials) to
+# see OCI's live catalog.
+oci: meta.llama-3.3-70b-instruct
