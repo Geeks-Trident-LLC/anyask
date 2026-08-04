@@ -53,6 +53,27 @@ async def test_generate_success():
 
 
 @pytest.mark.asyncio
+async def test_generate_reasoning_true_sets_default_reasoning_effort():
+    p = OpenAIProvider(api_key="sk-test")
+    p.client.chat.completions.create = AsyncMock(return_value=_fake_response())
+
+    await p.generate(prompt="hi", model="o3-mini", reasoning=True)
+
+    _, kwargs = p.client.chat.completions.create.call_args
+    assert kwargs["reasoning_effort"] == "medium"
+
+
+def test_generate_sync_reasoning_false_omits_reasoning_effort():
+    p = OpenAIProvider(api_key="sk-test")
+    p.sync_client.chat.completions.create = MagicMock(return_value=_fake_response())
+
+    p.generate_sync(prompt="hi", model="gpt-4o-mini", reasoning=False)
+
+    _, kwargs = p.sync_client.chat.completions.create.call_args
+    assert "reasoning_effort" not in kwargs
+
+
+@pytest.mark.asyncio
 async def test_generate_wraps_exceptions_in_provider_error():
     p = OpenAIProvider(api_key="sk-test")
     original = RuntimeError("boom")

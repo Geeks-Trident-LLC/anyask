@@ -8,7 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
--
+- `reasoning: bool = False` on `ask()`/`ask_async()` — enables extended/
+  deliberate reasoning using each provider's own real mechanism
+  (Anthropic extended thinking, OpenAI/OpenAI-compatible
+  `reasoning_effort`, Gemini/Vertex AI thinking budgets, Bedrock's Claude
+  thinking field). Providers with no such mechanism (Azure, Mistral,
+  Cohere, OCI) raise `ProviderNotFoundError` rather than silently
+  ignoring it. See `docs/providers/index.md`'s Reasoning support table.
 
 ### Changed
 -

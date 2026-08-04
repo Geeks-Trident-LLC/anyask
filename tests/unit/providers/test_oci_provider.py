@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 
 import anyask.providers.oci as oci_provider_module
-from anyask.errors import ProviderAuthError, ProviderError
+from anyask.errors import ProviderAuthError, ProviderError, ProviderNotFoundError
 from anyask.providers.oci import OCIProvider
 
 MODEL_ID = "meta.llama-3.3-70b-instruct"
@@ -90,6 +90,21 @@ def test_supports_always_true(monkeypatch):
     _patch_oci(monkeypatch, config={"region": "us-chicago-1"})
     p = OCIProvider(compartment_id=COMPARTMENT_ID, region=None)
     assert p.supports("anything")
+
+
+@pytest.mark.asyncio
+async def test_generate_reasoning_true_raises_provider_not_found_error(monkeypatch):
+    _patch_oci(monkeypatch, config={"region": "us-chicago-1"})
+    p = OCIProvider(compartment_id=COMPARTMENT_ID, region=None)
+    with pytest.raises(ProviderNotFoundError, match="reasoning"):
+        await p.generate(prompt="hi", model=MODEL_ID, reasoning=True)
+
+
+def test_generate_sync_reasoning_true_raises_provider_not_found_error(monkeypatch):
+    _patch_oci(monkeypatch, config={"region": "us-chicago-1"})
+    p = OCIProvider(compartment_id=COMPARTMENT_ID, region=None)
+    with pytest.raises(ProviderNotFoundError, match="reasoning"):
+        p.generate_sync(prompt="hi", model=MODEL_ID, reasoning=True)
 
 
 @pytest.mark.asyncio

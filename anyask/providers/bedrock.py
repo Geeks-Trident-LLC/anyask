@@ -56,26 +56,53 @@ class BedrockProvider(Provider, ModelListingMixin):
     def supports(self, model: str) -> bool:
         return True
 
-    async def generate(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
+    async def generate(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
         try:
-            return await asyncio.to_thread(self._converse, prompt, model, **kwargs)
+            return await asyncio.to_thread(
+                self._converse, prompt, model, reasoning=reasoning, **kwargs
+            )
         except Exception as exc:
             raise ProviderError(str(exc)) from exc
 
-    def generate_sync(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
+    def generate_sync(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
         try:
-            return self._converse(prompt, model, **kwargs)
+            return self._converse(prompt, model, reasoning=reasoning, **kwargs)
         except Exception as exc:
             raise ProviderError(str(exc)) from exc
 
-    def _converse(self, prompt: str, model: str, **kwargs: Any) -> AskResponse:
+    def _converse(
+        self, prompt: str, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
         max_tokens = kwargs.pop("max_tokens", 2048)
-        temperature = kwargs.pop("temperature", 0.2)
+        inference_config: dict = {"maxTokens": max_tokens}
+
+        if reasoning:
+            # Claude-on-Bedrock's thinking field, same shape as native
+            # Anthropic - requires no fixed temperature while enabled, so
+            # omit it from inferenceConfig entirely (model uses its
+            # default) rather than send a value the API will reject. Only
+            # applies to Claude models; other Bedrock model families raise
+            # from the API itself if this field isn't recognized.
+            kwargs.setdefault(
+                "additionalModelRequestFields",
+                {
+                    "thinking": {
+                        "type": "enabled",
+                        "budget_tokens": kwargs.pop("thinking_budget", 1024),
+                    }
+                },
+            )
+        else:
+            inference_config["temperature"] = kwargs.pop("temperature", 0.2)
 
         response = self.client.converse(
             modelId=model or self.default_model,
             messages=[{"role": "user", "content": [{"text": prompt}]}],
-            inferenceConfig={"maxTokens": max_tokens, "temperature": temperature},
+            inferenceConfig=inference_config,
             **kwargs,
         )
 

@@ -136,6 +136,29 @@ def test_generate_sync_joins_multiple_content_blocks():
     assert result.content == "hello world"
 
 
+def test_generate_sync_reasoning_true_sets_thinking_and_drops_temperature():
+    p = BedrockProvider(region="us-east-1")
+    p.client.converse = MagicMock(return_value=_fake_response())
+
+    p.generate_sync(prompt="hi", model=MODEL_ID, reasoning=True)
+
+    _, kwargs = p.client.converse.call_args
+    assert kwargs["additionalModelRequestFields"] == {
+        "thinking": {"type": "enabled", "budget_tokens": 1024}
+    }
+    assert "temperature" not in kwargs["inferenceConfig"]
+
+
+def test_generate_sync_reasoning_true_respects_explicit_thinking_budget():
+    p = BedrockProvider(region="us-east-1")
+    p.client.converse = MagicMock(return_value=_fake_response())
+
+    p.generate_sync(prompt="hi", model=MODEL_ID, reasoning=True, thinking_budget=2048)
+
+    _, kwargs = p.client.converse.call_args
+    assert kwargs["additionalModelRequestFields"]["thinking"]["budget_tokens"] == 2048
+
+
 def test_from_env_missing_region_raises(monkeypatch):
     monkeypatch.delenv("BEDROCK_REGION", raising=False)
     monkeypatch.delenv("BEDROCK_DEFAULT_REGION", raising=False)

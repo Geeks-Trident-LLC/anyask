@@ -7,7 +7,7 @@ from typing import Any, List
 
 from cohere import AsyncClientV2, ClientV2
 
-from anyask.errors import ProviderAuthError, ProviderError
+from anyask.errors import ProviderAuthError, ProviderError, ProviderNotFoundError
 from anyask.model_catalog import model as MODEL
 from anyask.model_listing_mixin import ModelListingMixin
 from anyask.provider import AskResponse, Provider, TokenUsage
@@ -76,7 +76,14 @@ class CohereProvider(Provider, ModelListingMixin):
     def supports(self, model: str) -> bool:
         return True
 
-    async def generate(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
+    async def generate(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
+        if reasoning:
+            raise ProviderNotFoundError(
+                f"{self.name} does not support the reasoning parameter - "
+                "no documented per-call toggle for this provider"
+            )
         kwargs.setdefault("temperature", 0.2)
         kwargs.setdefault("max_tokens", 2048)
 
@@ -93,7 +100,14 @@ class CohereProvider(Provider, ModelListingMixin):
         except Exception as exc:
             raise ProviderError(str(exc)) from exc
 
-    def generate_sync(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
+    def generate_sync(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
+        if reasoning:
+            raise ProviderNotFoundError(
+                f"{self.name} does not support the reasoning parameter - "
+                "no documented per-call toggle for this provider"
+            )
         kwargs.setdefault("temperature", 0.2)
         kwargs.setdefault("max_tokens", 2048)
 

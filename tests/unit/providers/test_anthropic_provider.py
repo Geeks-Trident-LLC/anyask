@@ -116,6 +116,45 @@ def test_generate_sync_usage_none_gives_none_total():
     assert result.finish_reason is None
 
 
+@pytest.mark.asyncio
+async def test_generate_reasoning_true_enables_thinking_and_drops_temperature():
+    p = AnthropicProvider(api_key="sk-test")
+    p.client.messages.create = AsyncMock(return_value=_fake_response())
+
+    await p.generate(prompt="hi", model="claude-sonnet-4-5", reasoning=True)
+
+    _, kwargs = p.client.messages.create.call_args
+    assert kwargs["thinking"] == {"type": "enabled", "budget_tokens": 1024}
+    assert "temperature" not in kwargs
+
+
+def test_generate_sync_reasoning_true_respects_explicit_thinking_budget():
+    p = AnthropicProvider(api_key="sk-test")
+    p.sync_client.messages.create = MagicMock(return_value=_fake_response())
+
+    p.generate_sync(
+        prompt="hi",
+        model="claude-sonnet-4-5",
+        reasoning=True,
+        thinking_budget=4096,
+    )
+
+    _, kwargs = p.sync_client.messages.create.call_args
+    assert kwargs["thinking"] == {"type": "enabled", "budget_tokens": 4096}
+    assert "thinking_budget" not in kwargs
+
+
+def test_generate_sync_reasoning_false_keeps_default_temperature():
+    p = AnthropicProvider(api_key="sk-test")
+    p.sync_client.messages.create = MagicMock(return_value=_fake_response())
+
+    p.generate_sync(prompt="hi", model="claude-sonnet-4-5", reasoning=False)
+
+    _, kwargs = p.sync_client.messages.create.call_args
+    assert kwargs["temperature"] == 0.2
+    assert "thinking" not in kwargs
+
+
 def test_from_env_missing_key_raises(monkeypatch):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     with pytest.raises(ProviderAuthError, match="ANTHROPIC_API_KEY"):

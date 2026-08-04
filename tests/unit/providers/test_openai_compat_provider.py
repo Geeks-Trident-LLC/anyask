@@ -71,6 +71,40 @@ async def test_generate_wraps_exceptions_in_provider_error():
         await p.generate(prompt="hi", model="model-x")
 
 
+@pytest.mark.asyncio
+async def test_generate_reasoning_true_sets_default_reasoning_effort():
+    p = _make_provider()
+    p.client.chat.completions.create = AsyncMock(return_value=_fake_response())
+
+    await p.generate(prompt="hi", model="model-x", reasoning=True)
+
+    _, kwargs = p.client.chat.completions.create.call_args
+    assert kwargs["reasoning_effort"] == "medium"
+
+
+@pytest.mark.asyncio
+async def test_generate_reasoning_true_respects_explicit_reasoning_effort():
+    p = _make_provider()
+    p.client.chat.completions.create = AsyncMock(return_value=_fake_response())
+
+    await p.generate(
+        prompt="hi", model="model-x", reasoning=True, reasoning_effort="high"
+    )
+
+    _, kwargs = p.client.chat.completions.create.call_args
+    assert kwargs["reasoning_effort"] == "high"
+
+
+def test_generate_sync_reasoning_false_omits_reasoning_effort():
+    p = _make_provider()
+    p.sync_client.chat.completions.create = MagicMock(return_value=_fake_response())
+
+    p.generate_sync(prompt="hi", model="model-x", reasoning=False)
+
+    _, kwargs = p.sync_client.chat.completions.create.call_args
+    assert "reasoning_effort" not in kwargs
+
+
 def test_generate_sync_success():
     p = _make_provider()
     p.sync_client.chat.completions.create = MagicMock(return_value=_fake_response())

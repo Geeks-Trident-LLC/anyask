@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from anyask.errors import ProviderAuthError, ProviderError
+from anyask.errors import ProviderAuthError, ProviderError, ProviderNotFoundError
 from anyask.providers.azure import AzureOpenAIProvider, build_azure_endpoint
 
 
@@ -130,6 +130,19 @@ def test_generate_sync_wraps_exceptions_in_provider_error():
 
     with pytest.raises(ProviderError):
         p.generate_sync(prompt="hi")
+
+
+@pytest.mark.asyncio
+async def test_generate_reasoning_true_raises_provider_not_found_error():
+    p = _make_provider()
+    with pytest.raises(ProviderNotFoundError, match="reasoning"):
+        await p.generate(prompt="hi", reasoning=True)
+
+
+def test_generate_sync_reasoning_true_raises_provider_not_found_error():
+    p = _make_provider()
+    with pytest.raises(ProviderNotFoundError, match="reasoning"):
+        p.generate_sync(prompt="hi", reasoning=True)
 
 
 def test_fetch_latest_models_returns_deployment_only():

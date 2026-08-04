@@ -8,7 +8,7 @@ from typing import Any, List
 
 import oci
 
-from anyask.errors import ProviderAuthError, ProviderError
+from anyask.errors import ProviderAuthError, ProviderError, ProviderNotFoundError
 from anyask.model_catalog import model as MODEL
 from anyask.model_listing_mixin import ModelListingMixin
 from anyask.provider import AskResponse, Provider, TokenUsage
@@ -85,13 +85,29 @@ class OCIProvider(Provider, ModelListingMixin):
     def supports(self, model: str) -> bool:
         return True
 
-    async def generate(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
+    async def generate(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
+        if reasoning:
+            raise ProviderNotFoundError(
+                f"{self.name} does not support the reasoning parameter - "
+                "no documented per-call toggle for the Generic chat "
+                "request shape this provider uses"
+            )
         try:
             return await asyncio.to_thread(self._chat, prompt, model, **kwargs)
         except Exception as exc:
             raise ProviderError(str(exc)) from exc
 
-    def generate_sync(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
+    def generate_sync(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
+        if reasoning:
+            raise ProviderNotFoundError(
+                f"{self.name} does not support the reasoning parameter - "
+                "no documented per-call toggle for the Generic chat "
+                "request shape this provider uses"
+            )
         try:
             return self._chat(prompt, model, **kwargs)
         except Exception as exc:

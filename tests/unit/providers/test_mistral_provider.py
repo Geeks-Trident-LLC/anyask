@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from anyask.errors import ProviderAuthError, ProviderError
+from anyask.errors import ProviderAuthError, ProviderError, ProviderNotFoundError
 from anyask.providers.mistral import MistralProvider
 
 
@@ -118,6 +118,19 @@ def test_generate_sync_usage_none_gives_none_total():
 
     assert result.usage.prompt_tokens is None
     assert result.usage.total_tokens is None
+
+
+@pytest.mark.asyncio
+async def test_generate_reasoning_true_raises_provider_not_found_error():
+    p = MistralProvider(api_key="sk-test")
+    with pytest.raises(ProviderNotFoundError, match="reasoning"):
+        await p.generate(prompt="hi", model="mistral-small-latest", reasoning=True)
+
+
+def test_generate_sync_reasoning_true_raises_provider_not_found_error():
+    p = MistralProvider(api_key="sk-test")
+    with pytest.raises(ProviderNotFoundError, match="reasoning"):
+        p.generate_sync(prompt="hi", model="mistral-small-latest", reasoning=True)
 
 
 def test_from_env_missing_key_raises(monkeypatch):

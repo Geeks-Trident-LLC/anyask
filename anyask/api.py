@@ -44,27 +44,51 @@ def _split_kwargs(kwargs: dict) -> tuple:
     return config, call_kwargs
 
 
-def ask(prompt: str, *, provider: str, model: str, **kwargs: Any) -> AskResponse:
+def ask(
+    prompt: str,
+    *,
+    provider: str,
+    model: str,
+    reasoning: bool = False,
+    **kwargs: Any,
+) -> AskResponse:
     """Call `provider`'s `model` synchronously and return its response.
 
     `**kwargs` is split: construction keys (api_key, endpoint, api_version,
     deployment, region, project, compartment_id) go to the provider's
     constructor; everything else (temperature, max_tokens, ...) is
     forwarded to `generate_sync()` unchanged.
+
+    `reasoning=True` requests extended/deliberate reasoning using each
+    provider's own real mechanism (Anthropic extended thinking, OpenAI/
+    OpenAI-compatible `reasoning_effort`, Gemini/Vertex AI thinking
+    budgets, Bedrock's Claude thinking field). Providers with no such
+    mechanism (Azure, Mistral, Cohere, OCI) raise `ProviderNotFoundError`
+    rather than silently ignoring it - see `docs/providers/index.md` for
+    the current per-provider support matrix.
     """
     provider_cls = _resolve_provider_cls(provider)
     config, call_kwargs = _split_kwargs(kwargs)
-    return provider_cls(**config).generate_sync(prompt, model=model, **call_kwargs)
+    return provider_cls(**config).generate_sync(
+        prompt, model=model, reasoning=reasoning, **call_kwargs
+    )
 
 
 async def ask_async(
-    prompt: str, *, provider: str, model: str, **kwargs: Any
+    prompt: str,
+    *,
+    provider: str,
+    model: str,
+    reasoning: bool = False,
+    **kwargs: Any,
 ) -> AskResponse:
     """Async counterpart of `ask()` - calls `generate()` instead of
-    `generate_sync()`."""
+    `generate_sync()`. See `ask()` for `reasoning`."""
     provider_cls = _resolve_provider_cls(provider)
     config, call_kwargs = _split_kwargs(kwargs)
-    return await provider_cls(**config).generate(prompt, model=model, **call_kwargs)
+    return await provider_cls(**config).generate(
+        prompt, model=model, reasoning=reasoning, **call_kwargs
+    )
 
 
 def list_models(provider: str, **kwargs: Any) -> List[str]:

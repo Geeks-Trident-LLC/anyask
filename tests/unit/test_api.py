@@ -94,7 +94,13 @@ def test_ask_splits_construction_and_call_kwargs(monkeypatch):
     instance = _FakeProvider.instances[0]
     assert instance.init_kwargs == {"api_key": "secret", "region": "us-east-1"}
     assert instance.generate_sync_calls == [
-        {"prompt": "hi", "model": "model-x", "temperature": 0.7, "max_tokens": 100}
+        {
+            "prompt": "hi",
+            "model": "model-x",
+            "reasoning": False,
+            "temperature": 0.7,
+            "max_tokens": 100,
+        }
     ]
 
 
@@ -118,13 +124,36 @@ async def test_ask_async_splits_construction_and_call_kwargs(monkeypatch):
         "compartment_id": "ocid1.compartment",
     }
     assert instance.generate_calls == [
-        {"prompt": "hi", "model": "model-x", "temperature": 0.3}
+        {"prompt": "hi", "model": "model-x", "reasoning": False, "temperature": 0.3}
     ]
 
 
 def test_ask_unknown_provider_raises_provider_not_found_error():
     with pytest.raises(ProviderNotFoundError):
         api_module.ask("hi", provider="not-a-real-provider", model="x")
+
+
+def test_ask_reasoning_true_is_forwarded_to_generate_sync(monkeypatch):
+    _patch_registry(monkeypatch, _FakeProvider)
+
+    api_module.ask("hi", provider="fake", model="model-x", reasoning=True)
+
+    instance = _FakeProvider.instances[0]
+    assert instance.generate_sync_calls == [
+        {"prompt": "hi", "model": "model-x", "reasoning": True}
+    ]
+
+
+@pytest.mark.asyncio
+async def test_ask_async_reasoning_true_is_forwarded_to_generate(monkeypatch):
+    _patch_registry(monkeypatch, _FakeProvider)
+
+    await api_module.ask_async("hi", provider="fake", model="model-x", reasoning=True)
+
+    instance = _FakeProvider.instances[0]
+    assert instance.generate_calls == [
+        {"prompt": "hi", "model": "model-x", "reasoning": True}
+    ]
 
 
 # ------------------------------------------------------------

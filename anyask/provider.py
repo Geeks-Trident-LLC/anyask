@@ -68,13 +68,25 @@ class Provider(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def generate(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
-        """Async text generation call."""
+    async def generate(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
+        """Async text generation call.
+
+        `reasoning=True` requests extended/deliberate reasoning on
+        providers that support it (Anthropic, OpenAI and the
+        OpenAI-compatible vendors, Gemini, Vertex AI, Bedrock), using each
+        provider's own real mechanism - never simulated. Providers with no
+        such mechanism (Azure, Mistral, Cohere, OCI) raise
+        `ProviderNotFoundError` rather than silently ignoring it.
+        """
         raise NotImplementedError
 
     @abstractmethod
-    def generate_sync(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
-        """Sync text generation call."""
+    def generate_sync(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
+        """Sync text generation call. See `generate()` for `reasoning`."""
         raise NotImplementedError
 
     @classmethod

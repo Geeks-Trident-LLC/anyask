@@ -38,7 +38,15 @@ class OpenAICompatProvider(Provider):
     def supports(self, model: str) -> bool:
         return True
 
-    async def generate(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
+    async def generate(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
+        # OpenAI-compatible `reasoning_effort` convention - support varies
+        # by vendor/model; an unsupported combination surfaces as a
+        # ProviderError from the vendor's own API rejecting the field,
+        # rather than being silently ignored here.
+        if reasoning:
+            kwargs.setdefault("reasoning_effort", "medium")
         try:
             response = await self.client.chat.completions.create(
                 model=model or self.default_model,
@@ -66,7 +74,11 @@ class OpenAICompatProvider(Provider):
         except Exception as exc:
             raise ProviderError(str(exc)) from exc
 
-    def generate_sync(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
+    def generate_sync(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
+        if reasoning:
+            kwargs.setdefault("reasoning_effort", "medium")
         try:
             response = self.sync_client.chat.completions.create(
                 model=model or self.default_model,

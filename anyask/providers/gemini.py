@@ -28,9 +28,13 @@ class GeminiProvider(Provider, ModelListingMixin):
     def supports(self, model: str) -> bool:
         return True
 
-    async def generate(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
+    async def generate(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
         try:
-            thinking_budget = kwargs.pop("thinking_budget", 0)
+            # -1 = dynamic thinking budget (model decides), 0 = disabled.
+            # An explicit thinking_budget kwarg always wins over reasoning.
+            thinking_budget = kwargs.pop("thinking_budget", -1 if reasoning else 0)
             config = genai.types.GenerateContentConfig(
                 temperature=kwargs.pop("temperature", None),
                 max_output_tokens=kwargs.pop("max_tokens", None),
@@ -69,9 +73,11 @@ class GeminiProvider(Provider, ModelListingMixin):
         except Exception as exc:
             raise ProviderError(str(exc)) from exc
 
-    def generate_sync(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
+    def generate_sync(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
         try:
-            thinking_budget = kwargs.pop("thinking_budget", 0)
+            thinking_budget = kwargs.pop("thinking_budget", -1 if reasoning else 0)
             config = genai.types.GenerateContentConfig(
                 temperature=kwargs.pop("temperature", None),
                 max_output_tokens=kwargs.pop("max_tokens", None),

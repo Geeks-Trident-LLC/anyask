@@ -53,6 +53,22 @@ Extra keyword arguments are split automatically: construction keys
 (`temperature`, `max_tokens`, ...) is forwarded to the generation call
 unchanged.
 
+Pass `reasoning=True` to request extended/deliberate reasoning, using
+each provider's own real mechanism:
+
+```python
+response = anyask.ask(
+    "What's 17 * 24? Show your reasoning.",
+    provider="anthropic",
+    model="claude-opus-4-8",
+    reasoning=True,
+)
+```
+
+Not every provider supports it — see the [Providers](../providers/index.md#reasoning-support)
+page for the per-provider behavior; unsupported providers raise
+`anyask.ProviderNotFoundError` rather than silently ignoring the flag.
+
 ## 2. `ask_async()` — the async counterpart
 
 ```python

@@ -28,9 +28,21 @@ class AnthropicProvider(Provider, ModelListingMixin):
     def supports(self, model: str) -> bool:
         return True
 
-    async def generate(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
-        kwargs.setdefault("temperature", 0.2)
+    async def generate(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
         kwargs.setdefault("max_tokens", 2048)
+        if reasoning:
+            # Extended thinking: Anthropic rejects a temperature override
+            # while it's enabled (only the default, effectively 1, is
+            # accepted), so skip the temperature default entirely rather
+            # than send a value the API will reject.
+            kwargs["thinking"] = {
+                "type": "enabled",
+                "budget_tokens": kwargs.pop("thinking_budget", 1024),
+            }
+        else:
+            kwargs.setdefault("temperature", 0.2)
 
         try:
             response = await self.client.messages.create(
@@ -63,9 +75,17 @@ class AnthropicProvider(Provider, ModelListingMixin):
         except Exception as exc:
             raise ProviderError(str(exc)) from exc
 
-    def generate_sync(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
-        kwargs.setdefault("temperature", 0.2)
+    def generate_sync(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
         kwargs.setdefault("max_tokens", 2048)
+        if reasoning:
+            kwargs["thinking"] = {
+                "type": "enabled",
+                "budget_tokens": kwargs.pop("thinking_budget", 1024),
+            }
+        else:
+            kwargs.setdefault("temperature", 0.2)
 
         try:
             response = self.sync_client.messages.create(

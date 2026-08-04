@@ -63,6 +63,24 @@ extending anyask itself, not for calling it:
   since they authenticate via their cloud platform's own credential chain
   rather than a project-level API key.
 
+## Reasoning support
+
+`ask()`/`ask_async()` take a `reasoning: bool = False` keyword. When
+`True`, each provider that supports it enables extended/deliberate
+reasoning using its own real mechanism — nothing is simulated, and
+support is not uniform:
+
+| Provider | `reasoning=True` behavior |
+|---|---|
+| Anthropic | Extended thinking (`thinking={"type": "enabled", "budget_tokens": ...}`); default budget 1024, override with `thinking_budget=N`. Temperature is left unset, since the API rejects an override while thinking is enabled. |
+| OpenAI, and the 9 OpenAI-compatible vendors | `reasoning_effort="medium"` by default; override with `reasoning_effort="low"/"high"/...`. Support and accepted values depend on the specific model — an unsupported combination surfaces as a `ProviderError` from the vendor's own API. |
+| Gemini, Vertex AI | `thinking_config.thinking_budget=-1` (dynamic — model decides) by default; override with `thinking_budget=N` (or `0` to force off even when `reasoning=True`). |
+| Amazon Bedrock | Same `thinking` field as native Anthropic, via `additionalModelRequestFields` — only applies to Claude models on Bedrock; other model families error from the API if it's not recognized. |
+| Azure, Mistral, Cohere, OCI | Not supported — `reasoning=True` raises `ProviderNotFoundError` immediately rather than silently doing nothing. |
+
+`reasoning=False` (the default) leaves every provider's existing
+non-reasoning behavior completely unchanged.
+
 ## A note on Vertex AI and OCI model IDs
 
 **Vertex AI** serves the exact same Gemini model ID strings as the native

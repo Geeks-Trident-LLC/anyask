@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from anyask.errors import ProviderAuthError, ProviderError
+from anyask.errors import ProviderAuthError, ProviderError, ProviderNotFoundError
 from anyask.providers.cohere import CohereProvider
 
 
@@ -32,6 +32,19 @@ def test_init_uses_env_var_when_no_explicit_key(monkeypatch):
 def test_supports_always_true():
     p = CohereProvider(api_key="sk-test")
     assert p.supports("anything")
+
+
+@pytest.mark.asyncio
+async def test_generate_reasoning_true_raises_provider_not_found_error():
+    p = CohereProvider(api_key="sk-test")
+    with pytest.raises(ProviderNotFoundError, match="reasoning"):
+        await p.generate(prompt="hi", model="command-a", reasoning=True)
+
+
+def test_generate_sync_reasoning_true_raises_provider_not_found_error():
+    p = CohereProvider(api_key="sk-test")
+    with pytest.raises(ProviderNotFoundError, match="reasoning"):
+        p.generate_sync(prompt="hi", model="command-a", reasoning=True)
 
 
 @pytest.mark.asyncio

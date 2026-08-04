@@ -9,7 +9,7 @@ from typing import Any, List
 from azure.ai.inference import ChatCompletionsClient
 from azure.core.credentials import AzureKeyCredential
 
-from anyask.errors import ProviderAuthError, ProviderError
+from anyask.errors import ProviderAuthError, ProviderError, ProviderNotFoundError
 from anyask.model_listing_mixin import ModelListingMixin
 from anyask.provider import AskResponse, Provider, TokenUsage
 
@@ -65,8 +65,14 @@ class AzureOpenAIProvider(Provider, ModelListingMixin):
         return True
 
     async def generate(
-        self, prompt: str, *, model: str = "", **kwargs: Any
+        self, prompt: str, *, model: str = "", reasoning: bool = False, **kwargs: Any
     ) -> AskResponse:
+        if reasoning:
+            raise ProviderNotFoundError(
+                f"{self.name} does not support the reasoning parameter - "
+                "azure.ai.inference is a generic gateway with no reasoning "
+                "field consistent across the model families it can front"
+            )
         try:
             # Azure SDK is synchronous -> run in thread
             result = await asyncio.to_thread(
@@ -96,8 +102,14 @@ class AzureOpenAIProvider(Provider, ModelListingMixin):
             raise ProviderError(str(exc)) from exc
 
     def generate_sync(
-        self, prompt: str, *, model: str = "", **kwargs: Any
+        self, prompt: str, *, model: str = "", reasoning: bool = False, **kwargs: Any
     ) -> AskResponse:
+        if reasoning:
+            raise ProviderNotFoundError(
+                f"{self.name} does not support the reasoning parameter - "
+                "azure.ai.inference is a generic gateway with no reasoning "
+                "field consistent across the model families it can front"
+            )
         try:
             result = self.client.complete(
                 messages=[{"role": "user", "content": prompt}],

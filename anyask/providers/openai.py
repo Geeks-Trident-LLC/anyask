@@ -29,7 +29,11 @@ class OpenAIProvider(Provider, ModelListingMixin):
     def supports(self, model: str) -> bool:
         return bool(re.search(r"(gpt|o[0-9]+)-", model))
 
-    async def generate(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
+    async def generate(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
+        if reasoning:
+            kwargs.setdefault("reasoning_effort", "medium")
         try:
             response = await self.client.chat.completions.create(
                 model=model or self.default_model,
@@ -57,7 +61,11 @@ class OpenAIProvider(Provider, ModelListingMixin):
         except Exception as exc:
             raise ProviderError(str(exc)) from exc
 
-    def generate_sync(self, prompt: str, *, model: str, **kwargs: Any) -> AskResponse:
+    def generate_sync(
+        self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
+    ) -> AskResponse:
+        if reasoning:
+            kwargs.setdefault("reasoning_effort", "medium")
         try:
             response = self.sync_client.chat.completions.create(
                 model=model or self.default_model,
