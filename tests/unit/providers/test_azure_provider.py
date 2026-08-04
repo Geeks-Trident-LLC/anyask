@@ -124,6 +124,28 @@ def test_generate_sync_success():
     assert result.usage.completion_tokens == 20
 
 
+def test_generate_sync_applies_default_temperature_and_max_tokens():
+    p = _make_provider()
+    p.client.complete = MagicMock(return_value=_fake_result())
+
+    p.generate_sync(prompt="hi")
+
+    _, kwargs = p.client.complete.call_args
+    assert kwargs["temperature"] == 0.2
+    assert kwargs["max_tokens"] == 2048
+
+
+def test_generate_sync_respects_explicit_temperature_and_max_tokens():
+    p = _make_provider()
+    p.client.complete = MagicMock(return_value=_fake_result())
+
+    p.generate_sync(prompt="hi", temperature=0.9, max_tokens=100)
+
+    _, kwargs = p.client.complete.call_args
+    assert kwargs["temperature"] == 0.9
+    assert kwargs["max_tokens"] == 100
+
+
 def test_generate_sync_wraps_exceptions_in_provider_error():
     p = _make_provider()
     p.client.complete = MagicMock(side_effect=RuntimeError("boom"))

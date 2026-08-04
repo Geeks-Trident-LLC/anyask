@@ -33,7 +33,14 @@ class OpenAIProvider(Provider, ModelListingMixin):
         self, prompt: str, *, model: str, reasoning: bool = False, **kwargs: Any
     ) -> AskResponse:
         if reasoning:
+            # Reasoning models reject temperature/max_tokens overrides
+            # (max_tokens specifically wants max_completion_tokens instead
+            # on some model generations) - leave both unset rather than
+            # send a value the API will reject.
             kwargs.setdefault("reasoning_effort", "medium")
+        else:
+            kwargs.setdefault("temperature", 0.2)
+            kwargs.setdefault("max_tokens", 2048)
         try:
             response = await self.client.chat.completions.create(
                 model=model or self.default_model,
@@ -66,6 +73,9 @@ class OpenAIProvider(Provider, ModelListingMixin):
     ) -> AskResponse:
         if reasoning:
             kwargs.setdefault("reasoning_effort", "medium")
+        else:
+            kwargs.setdefault("temperature", 0.2)
+            kwargs.setdefault("max_tokens", 2048)
         try:
             response = self.sync_client.chat.completions.create(
                 model=model or self.default_model,

@@ -73,6 +73,8 @@ class AzureOpenAIProvider(Provider, ModelListingMixin):
                 "azure.ai.inference is a generic gateway with no reasoning "
                 "field consistent across the model families it can front"
             )
+        kwargs.setdefault("temperature", 0.2)
+        kwargs.setdefault("max_tokens", 2048)
         try:
             # Azure SDK is synchronous -> run in thread
             result = await asyncio.to_thread(
@@ -110,6 +112,8 @@ class AzureOpenAIProvider(Provider, ModelListingMixin):
                 "azure.ai.inference is a generic gateway with no reasoning "
                 "field consistent across the model families it can front"
             )
+        kwargs.setdefault("temperature", 0.2)
+        kwargs.setdefault("max_tokens", 2048)
         try:
             result = self.client.complete(
                 messages=[{"role": "user", "content": prompt}],

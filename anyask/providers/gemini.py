@@ -36,8 +36,8 @@ class GeminiProvider(Provider, ModelListingMixin):
             # An explicit thinking_budget kwarg always wins over reasoning.
             thinking_budget = kwargs.pop("thinking_budget", -1 if reasoning else 0)
             config = genai.types.GenerateContentConfig(
-                temperature=kwargs.pop("temperature", None),
-                max_output_tokens=kwargs.pop("max_tokens", None),
+                temperature=kwargs.pop("temperature", 0.2),
+                max_output_tokens=kwargs.pop("max_tokens", 2048),
                 thinking_config=genai.types.ThinkingConfig(
                     thinking_budget=thinking_budget
                 ),
@@ -79,8 +79,8 @@ class GeminiProvider(Provider, ModelListingMixin):
         try:
             thinking_budget = kwargs.pop("thinking_budget", -1 if reasoning else 0)
             config = genai.types.GenerateContentConfig(
-                temperature=kwargs.pop("temperature", None),
-                max_output_tokens=kwargs.pop("max_tokens", None),
+                temperature=kwargs.pop("temperature", 0.2),
+                max_output_tokens=kwargs.pop("max_tokens", 2048),
                 thinking_config=genai.types.ThinkingConfig(
                     thinking_budget=thinking_budget
                 ),

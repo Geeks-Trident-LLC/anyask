@@ -73,6 +73,42 @@ def test_generate_sync_reasoning_false_omits_reasoning_effort():
     assert "reasoning_effort" not in kwargs
 
 
+def test_generate_sync_applies_default_temperature_and_max_tokens():
+    p = OpenAIProvider(api_key="sk-test")
+    p.sync_client.chat.completions.create = MagicMock(return_value=_fake_response())
+
+    p.generate_sync(prompt="hi", model="gpt-4o-mini")
+
+    _, kwargs = p.sync_client.chat.completions.create.call_args
+    assert kwargs["temperature"] == 0.2
+    assert kwargs["max_tokens"] == 2048
+
+
+def test_generate_sync_respects_explicit_temperature_and_max_tokens():
+    p = OpenAIProvider(api_key="sk-test")
+    p.sync_client.chat.completions.create = MagicMock(return_value=_fake_response())
+
+    p.generate_sync(prompt="hi", model="gpt-4o-mini", temperature=0.9, max_tokens=100)
+
+    _, kwargs = p.sync_client.chat.completions.create.call_args
+    assert kwargs["temperature"] == 0.9
+    assert kwargs["max_tokens"] == 100
+
+
+def test_generate_sync_reasoning_true_omits_temperature_and_max_tokens():
+    # Reasoning models reject a temperature override and use
+    # max_completion_tokens instead of max_tokens - leave both unset
+    # rather than send a value the API will reject.
+    p = OpenAIProvider(api_key="sk-test")
+    p.sync_client.chat.completions.create = MagicMock(return_value=_fake_response())
+
+    p.generate_sync(prompt="hi", model="o3-mini", reasoning=True)
+
+    _, kwargs = p.sync_client.chat.completions.create.call_args
+    assert "temperature" not in kwargs
+    assert "max_tokens" not in kwargs
+
+
 @pytest.mark.asyncio
 async def test_generate_wraps_exceptions_in_provider_error():
     p = OpenAIProvider(api_key="sk-test")

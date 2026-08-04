@@ -105,6 +105,28 @@ def test_generate_sync_reasoning_false_omits_reasoning_effort():
     assert "reasoning_effort" not in kwargs
 
 
+def test_generate_sync_applies_default_temperature_and_max_tokens():
+    p = _make_provider()
+    p.sync_client.chat.completions.create = MagicMock(return_value=_fake_response())
+
+    p.generate_sync(prompt="hi", model="model-x")
+
+    _, kwargs = p.sync_client.chat.completions.create.call_args
+    assert kwargs["temperature"] == 0.2
+    assert kwargs["max_tokens"] == 2048
+
+
+def test_generate_sync_reasoning_true_omits_temperature_and_max_tokens():
+    p = _make_provider()
+    p.sync_client.chat.completions.create = MagicMock(return_value=_fake_response())
+
+    p.generate_sync(prompt="hi", model="model-x", reasoning=True)
+
+    _, kwargs = p.sync_client.chat.completions.create.call_args
+    assert "temperature" not in kwargs
+    assert "max_tokens" not in kwargs
+
+
 def test_generate_sync_success():
     p = _make_provider()
     p.sync_client.chat.completions.create = MagicMock(return_value=_fake_response())

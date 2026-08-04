@@ -99,6 +99,19 @@ async def test_generate_reasoning_true_defaults_to_dynamic_thinking_budget():
     assert kwargs["config"].thinking_config.thinking_budget == -1
 
 
+@pytest.mark.asyncio
+async def test_generate_applies_default_temperature_and_max_tokens():
+    p = VertexAIProvider(project="my-project", region="us-central1")
+    p.client.models.generate_content = MagicMock(return_value=_fake_response())
+
+    await p.generate(prompt="hi", model="gemini-2.5-flash")
+
+    _, kwargs = p.client.models.generate_content.call_args
+    config = kwargs["config"]
+    assert config.temperature == 0.2
+    assert config.max_output_tokens == 2048
+
+
 def test_generate_sync_reasoning_false_disables_thinking():
     p = VertexAIProvider(project="my-project", region="us-central1")
     p.client.models.generate_content = MagicMock(return_value=_fake_response())

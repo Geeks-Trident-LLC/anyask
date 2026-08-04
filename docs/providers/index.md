@@ -10,6 +10,15 @@ constructor parameters in place of `api_key`.
 There is no automatic routing or fallback anywhere in anyask — `provider`
 is always an explicit, required argument on every call.
 
+Every provider defaults `temperature=0.2` and `max_tokens=2048` when the
+call doesn't specify them — the same defaults across all 17 providers,
+overridable per call via `temperature=`/`max_tokens=` kwargs. The one
+exception: when `reasoning=True` on OpenAI or an OpenAI-compatible
+vendor, both defaults are skipped entirely rather than sent, since
+reasoning models on some of these vendors reject a temperature override
+and use `max_completion_tokens` instead of `max_tokens` — see
+[Reasoning support](#reasoning-support) below.
+
 ## All providers
 
 | Provider | `provider` value | Credential | Extra params | Default model |

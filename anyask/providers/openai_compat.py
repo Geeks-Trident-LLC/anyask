@@ -44,9 +44,16 @@ class OpenAICompatProvider(Provider):
         # OpenAI-compatible `reasoning_effort` convention - support varies
         # by vendor/model; an unsupported combination surfaces as a
         # ProviderError from the vendor's own API rejecting the field,
-        # rather than being silently ignored here.
+        # rather than being silently ignored here. temperature/max_tokens
+        # defaults are skipped while reasoning, mirroring OpenAI's own
+        # reasoning models (which reject a temperature override) - some
+        # OpenAI-compatible vendors share that restriction, others don't,
+        # so the safer default is to omit both rather than guess per vendor.
         if reasoning:
             kwargs.setdefault("reasoning_effort", "medium")
+        else:
+            kwargs.setdefault("temperature", 0.2)
+            kwargs.setdefault("max_tokens", 2048)
         try:
             response = await self.client.chat.completions.create(
                 model=model or self.default_model,
@@ -79,6 +86,9 @@ class OpenAICompatProvider(Provider):
     ) -> AskResponse:
         if reasoning:
             kwargs.setdefault("reasoning_effort", "medium")
+        else:
+            kwargs.setdefault("temperature", 0.2)
+            kwargs.setdefault("max_tokens", 2048)
         try:
             response = self.sync_client.chat.completions.create(
                 model=model or self.default_model,

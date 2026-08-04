@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- Consistent `temperature=0.2`/`max_tokens=2048` defaults across all 17
+  providers (previously only Anthropic, Mistral, Cohere, Bedrock, and
+  OCI set these; OpenAI, the 9 OpenAI-compatible vendors, Gemini, Vertex
+  AI, and Azure passed calls through with no default, meaning identical
+  `ask()` calls could get very different sampling behavior purely
+  depending on provider). Skipped for OpenAI/OpenAI-compatible vendors
+  when `reasoning=True`, since reasoning models on some of them reject a
+  temperature override and use `max_completion_tokens` instead of
+  `max_tokens`.
 - `reasoning: bool = False` on `ask()`/`ask_async()` — enables extended/
   deliberate reasoning using each provider's own real mechanism
   (Anthropic extended thinking, OpenAI/OpenAI-compatible
