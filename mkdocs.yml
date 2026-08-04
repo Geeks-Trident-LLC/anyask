@@ -1,0 +1,54 @@
+site_name: askllm
+site_url: https://geeks-trident-llc.github.io/askllm/
+repo_url: https://github.com/Geeks-Trident-LLC/askllm
+repo_name: Geeks-Trident-LLC/askllm
+
+theme:
+  name: material
+  logo: assets/images/logo.svg
+  favicon: assets/images/favicon.svg
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+    - content.code.annotate
+    - toc.integrate
+  palette:
+    - scheme: default
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            show_source: true
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.details
+
+nav:
+  - Home: index.md
+
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quickstart: getting-started/quickstart.md
+
+  - Providers: providers/index.md
+
+  - Guides:
+      - Dependency Footprint: guides/dependency-footprint.md
+
+  - API Reference:
+      - Overview: reference/index.md
+
+  - Changelog: changelog.md

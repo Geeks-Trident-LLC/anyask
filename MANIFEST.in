@@ -1,0 +1,20 @@
+include LICENSE
+include README.md
+
+# Include YAML files inside the package
+recursive-include askllm *.yaml
+
+# Include any JSON files (if you add them later)
+recursive-include askllm *.json
+
+# Include any template files (future-proof)
+recursive-include askllm *.txt
+
+# Exclude tests, docs, examples from source distribution
+prune tests
+prune docs
+prune examples
+prune scripts
+
+# Re-include markdown docs under tests/ (e.g. tests/integration/README.md)
+recursive-include tests *.md

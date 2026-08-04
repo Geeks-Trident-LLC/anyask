@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Two find passes instead of the old 13 separate full-tree `find .` scans:
+#   1. prune-and-delete matched directories (__pycache__, .tox, build, ...)
+#      without walking their contents first, skipping .git entirely
+#   2. delete matching files
+# These stay in separate `find` invocations because GNU find's -delete
+# action silently forces -depth (bottom-up traversal), which breaks
+# -prune (which needs top-down traversal) if both appear in the same
+# command -- combining them caused nothing to be deleted at all.
+set -uo pipefail
+
+echo "Cleaning Python caches and build artifacts..."
+start=$(date +%s.%N)
+
+find . \
+  \( -name ".git" -prune \) -o \
+  \( -type d \( \
+       -name "__pycache__" -o -name ".pytest_cache" -o -name ".ruff_cache" \
+       -o -name ".ruffcache" -o -name ".tox" -o -name ".mypy_cache" \
+       -o -name "htmlcov" -o -name "*.egg-info" -o -name "build" -o -name "dist" \
+     \) -prune -exec rm -rf {} + \) \
+  2>/dev/null
+
+find . -not -path "./.git/*" -type f \( \
+    -name "*.pyc" -o -name ".coverage" -o -name "coverage.xml" \
+    -o -name "*.whl" -o -name "*.tar.gz" \
+  \) -delete \
+  2>/dev/null
+
+end=$(date +%s.%N)
+elapsed=$(awk "BEGIN {printf \"%.2f\", $end - $start}")
+echo "Cleanup complete in ${elapsed}s."

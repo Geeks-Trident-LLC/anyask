@@ -22,6 +22,16 @@ print(response.provider)         # "anthropic"
 print(response.model)            # "claude-haiku-4-5-20251001"
 ```
 
+## Documentation
+
+Full documentation, including the [Providers](https://geeks-trident-llc.github.io/askllm/latest/providers/)
+reference table, [Quickstart](https://geeks-trident-llc.github.io/askllm/latest/getting-started/quickstart/),
+and generated [API Reference](https://geeks-trident-llc.github.io/askllm/latest/reference/),
+is available at:
+
+- **Latest docs:** [https://geeks-trident-llc.github.io/askllm/latest/](https://geeks-trident-llc.github.io/askllm/latest/)
+- **All versions:** [https://geeks-trident-llc.github.io/askllm/](https://geeks-trident-llc.github.io/askllm/)
+
 ## Supported providers
 
 `openai`, `anthropic`, `gemini`, `vertexai`, `azure`, `mistral`, `cohere`, `bedrock`,

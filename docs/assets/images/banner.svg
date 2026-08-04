@@ -1,0 +1,36 @@
+<svg width="1200" height="260" viewBox="0 0 1200 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0F6FFF"/>
+      <stop offset="100%" stop-color="#35C9FF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="260" fill="url(#bgGradient)" rx="16" />
+
+  <!-- Title -->
+  <text x="80" y="130"
+        fill="#FFFFFF"
+        stroke="#000000"
+        stroke-width="2"
+        paint-order="stroke"
+        font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="96"
+        font-weight="700"
+        letter-spacing="1">
+    askllm
+  </text>
+
+  <!-- Subtitle -->
+  <text x="84" y="190"
+        fill="rgba(255,255,255,0.9)"
+        stroke="#000000"
+        stroke-width="1"
+        paint-order="stroke"
+        font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="36"
+        font-weight="500">
+    One function, 17 vendors, zero magic
+  </text>
+</svg>
