@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "anyask"
-version = "0.2.0"
+version = "0.2.1"
 description = "Call an LLM provider with a single text prompt, get its raw text response back - one function, 18 vendors, zero routing/fallback magic"
 readme = "README.md"
 license = { text = "MIT" }
