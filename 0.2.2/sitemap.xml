@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://geeks-trident-llc.github.io/anyask/0.2.2/</loc>
+         <lastmod>2026-08-05</lastmod>
+    </url>
+    <url>
+         <loc>https://geeks-trident-llc.github.io/anyask/0.2.2/changelog/</loc>
+         <lastmod>2026-08-05</lastmod>
+    </url>
+    <url>
+         <loc>https://geeks-trident-llc.github.io/anyask/0.2.2/cli/</loc>
+         <lastmod>2026-08-05</lastmod>
+    </url>
+    <url>
+         <loc>https://geeks-trident-llc.github.io/anyask/0.2.2/getting-started/installation/</loc>
+         <lastmod>2026-08-05</lastmod>
+    </url>
+    <url>
+         <loc>https://geeks-trident-llc.github.io/anyask/0.2.2/getting-started/quickstart/</loc>
+         <lastmod>2026-08-05</lastmod>
+    </url>
+    <url>
+         <loc>https://geeks-trident-llc.github.io/anyask/0.2.2/guides/dependency-footprint/</loc>
+         <lastmod>2026-08-05</lastmod>
+    </url>
+    <url>
+         <loc>https://geeks-trident-llc.github.io/anyask/0.2.2/providers/</loc>
+         <lastmod>2026-08-05</lastmod>
+    </url>
+    <url>
+         <loc>https://geeks-trident-llc.github.io/anyask/0.2.2/reference/</loc>
+         <lastmod>2026-08-05</lastmod>
+    </url>
+</urlset>

@@ -1,0 +1,1042 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://geeks-trident-llc.github.io/anyask/0.2.2/providers/">
+      
+      
+        <link rel="prev" href="../getting-started/quickstart/">
+      
+      
+        <link rel="next" href="../cli/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Providers - anyask</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#providers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="anyask" class="md-header__button md-logo" aria-label="anyask" data-md-component="logo">
+      
+  <img src="../assets/images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            anyask
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Providers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Geeks-Trident-LLC/anyask" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Geeks-Trident-LLC/anyask
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="anyask" class="md-nav__button md-logo" aria-label="anyask" data-md-component="logo">
+      
+  <img src="../assets/images/logo.svg" alt="logo">
+
+    </a>
+    anyask
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Geeks-Trident-LLC/anyask" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Geeks-Trident-LLC/anyask
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Providers
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#all-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        All providers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-implementation-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two implementation shapes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reasoning-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reasoning support
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-note-on-vertex-ai-and-oci-model-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A note on Vertex AI and OCI model IDs
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/dependency-footprint/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dependency Footprint
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="providers">Providers<a class="headerlink" href="#providers" title="Permanent link">&para;</a></h1>
+<p>anyask integrates 18 LLM providers behind one interface — <code>ask()</code>,
+<code>ask_async()</code>, <code>list_models()</code>, <code>list_models_async()</code>, and
+<code>get_provider()</code> all take the same <code>provider="..."</code> value. Most providers
+just need an API key; three cloud-gateway providers (Bedrock, Vertex AI,
+OCI) use their own ambient credential chains instead and take extra
+constructor parameters in place of <code>api_key</code>.</p>
+<p>There is no automatic routing or fallback anywhere in anyask — <code>provider</code>
+is always an explicit, required argument on every call.</p>
+<p>Every provider defaults <code>temperature=0.2</code> and <code>max_tokens=2048</code> when the
+call doesn't specify them — the same defaults across all 18 providers,
+overridable per call via <code>temperature=</code>/<code>max_tokens=</code> kwargs. The one
+exception: when <code>reasoning=True</code> on OpenAI or an OpenAI-compatible
+vendor, both defaults are skipped entirely rather than sent, since
+reasoning models on some of these vendors reject a temperature override
+and use <code>max_completion_tokens</code> instead of <code>max_tokens</code> — see
+<a href="#reasoning-support">Reasoning support</a> below.</p>
+<h2 id="all-providers">All providers<a class="headerlink" href="#all-providers" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th><code>provider</code> value</th>
+<th>Credential</th>
+<th>Extra params</th>
+<th>Default model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenAI</td>
+<td><code>"openai"</code></td>
+<td><code>OPENAI_API_KEY</code></td>
+<td>—</td>
+<td><code>gpt-4o-mini</code></td>
+</tr>
+<tr>
+<td>Anthropic</td>
+<td><code>"anthropic"</code></td>
+<td><code>ANTHROPIC_API_KEY</code></td>
+<td>—</td>
+<td><code>claude-haiku-4-5-20251001</code></td>
+</tr>
+<tr>
+<td>Google Gemini</td>
+<td><code>"gemini"</code></td>
+<td><code>GEMINI_API_KEY</code></td>
+<td>—</td>
+<td><code>gemini-2.5-flash</code></td>
+</tr>
+<tr>
+<td>DeepSeek</td>
+<td><code>"deepseek"</code></td>
+<td><code>DEEPSEEK_API_KEY</code></td>
+<td>—</td>
+<td><code>deepseek-v4-flash</code></td>
+</tr>
+<tr>
+<td>Groq</td>
+<td><code>"groq"</code></td>
+<td><code>GROQ_API_KEY</code></td>
+<td>—</td>
+<td><code>llama-3.1-8b-instant</code></td>
+</tr>
+<tr>
+<td>xAI (Grok)</td>
+<td><code>"xai"</code></td>
+<td><code>XAI_API_KEY</code></td>
+<td>—</td>
+<td><code>grok-3-mini</code></td>
+</tr>
+<tr>
+<td>Together AI</td>
+<td><code>"together"</code></td>
+<td><code>TOGETHER_API_KEY</code></td>
+<td>—</td>
+<td><code>meta-llama/Llama-3.1-8B-Instruct-Turbo</code></td>
+</tr>
+<tr>
+<td>Fireworks AI</td>
+<td><code>"fireworks"</code></td>
+<td><code>FIREWORKS_API_KEY</code></td>
+<td>—</td>
+<td><code>accounts/fireworks/models/llama-v3p1-8b-instruct</code></td>
+</tr>
+<tr>
+<td>Cerebras</td>
+<td><code>"cerebras"</code></td>
+<td><code>CEREBRAS_API_KEY</code></td>
+<td>—</td>
+<td><code>llama3.1-8b</code></td>
+</tr>
+<tr>
+<td>Perplexity</td>
+<td><code>"perplexity"</code></td>
+<td><code>PERPLEXITY_API_KEY</code></td>
+<td>—</td>
+<td><code>sonar</code></td>
+</tr>
+<tr>
+<td>OpenRouter</td>
+<td><code>"openrouter"</code></td>
+<td><code>OPENROUTER_API_KEY</code></td>
+<td>—</td>
+<td><code>google/gemini-2.5-flash-lite</code></td>
+</tr>
+<tr>
+<td>Moonshot AI (Kimi)</td>
+<td><code>"moonshot"</code></td>
+<td><code>MOONSHOT_API_KEY</code></td>
+<td>—</td>
+<td><code>moonshot-v1-8k</code></td>
+</tr>
+<tr>
+<td>Mistral AI</td>
+<td><code>"mistral"</code></td>
+<td><code>MISTRAL_API_KEY</code></td>
+<td>—</td>
+<td><code>mistral-small-latest</code></td>
+</tr>
+<tr>
+<td>Azure OpenAI</td>
+<td><code>"azure"</code></td>
+<td><code>AZURE_API_KEY</code></td>
+<td><code>endpoint</code> (<code>AZURE_ENDPOINT</code>), <code>api_version</code> (<code>AZURE_API_VERSION</code>), <code>deployment</code> (<code>AZURE_DEPLOYMENT</code>) — <code>model</code> is passed as usual but the deployment name drives the actual call</td>
+<td><em>(your deployment name)</em></td>
+</tr>
+<tr>
+<td>Amazon Bedrock</td>
+<td><code>"bedrock"</code></td>
+<td><em>(none — AWS credential chain)</em></td>
+<td><code>region</code> (<code>BEDROCK_REGION</code>/<code>BEDROCK_DEFAULT_REGION</code>, required)</td>
+<td><code>anthropic.claude-haiku-4-5-v1:0</code></td>
+</tr>
+<tr>
+<td>Cohere</td>
+<td><code>"cohere"</code></td>
+<td><code>COHERE_API_KEY</code></td>
+<td>—</td>
+<td><code>command-light</code></td>
+</tr>
+<tr>
+<td>Google Vertex AI</td>
+<td><code>"vertexai"</code></td>
+<td><em>(none — GCP ADC credential chain)</em></td>
+<td><code>project</code> (<code>VERTEXAI_PROJECT</code>, required), <code>region</code> (<code>VERTEXAI_REGION</code>, required)</td>
+<td><code>gemini-2.5-flash</code></td>
+</tr>
+<tr>
+<td>Oracle OCI</td>
+<td><code>"oci"</code></td>
+<td><em>(none — <code>~/.oci/config</code> credential file)</em></td>
+<td><code>compartment_id</code> (<code>OCI_COMPARTMENT_ID</code>, required), <code>region</code> (<code>OCI_REGION</code>, optional — falls back to the config file)</td>
+<td><code>meta.llama-3.3-70b-instruct</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>openai</code>'s extra also installs the SDK backing nine OpenAI-compatible
+vendors (<code>deepseek</code>, <code>groq</code>, <code>xai</code>, <code>together</code>, <code>fireworks</code>, <code>cerebras</code>,
+<code>perplexity</code>, <code>openrouter</code>, <code>moonshot</code>) — they share one HTTP client
+implementation (<code>anyask/providers/openai_compat.py</code>) and differ only in
+base URL, env var, and default model. Each still needs its own extra
+installed (e.g. <code>pip install anyask[groq]</code>) since credentials and default
+models are provider-specific, but no additional package beyond <code>openai</code>
+itself is pulled in.</p>
+<p>Credentials resolve in this order everywhere: explicit function/keyword
+argument (<code>api_key=...</code>, <code>region=...</code>, ...) &gt; provider-specific
+environment variable. There is no config-file fallback.</p>
+<h2 id="two-implementation-shapes">Two implementation shapes<a class="headerlink" href="#two-implementation-shapes" title="Permanent link">&para;</a></h2>
+<p>Internally, providers fall into two groups — this only matters if you're
+extending anyask itself, not for calling it:</p>
+<ul>
+<li><strong>Shape A</strong> — OpenAI-compatible chat-completions API (DeepSeek, Groq,
+  xAI, Together AI, Fireworks AI, Cerebras, Perplexity, OpenRouter,
+  Moonshot). These share one implementation
+  (<code>anyask/providers/openai_compat.py</code>) and differ only in base URL, env
+  var, and default model.</li>
+<li><strong>Shape B</strong> — a native SDK with its own request/response shape (OpenAI,
+  Anthropic, Gemini, Azure, Mistral, Bedrock, Cohere, Vertex AI, OCI).
+  Bedrock, Vertex AI, and OCI additionally take extra constructor
+  parameters (<code>region</code>/<code>project</code>/<code>compartment_id</code>) instead of <code>api_key</code>,
+  since they authenticate via their cloud platform's own credential chain
+  rather than a project-level API key.</li>
+</ul>
+<h2 id="reasoning-support">Reasoning support<a class="headerlink" href="#reasoning-support" title="Permanent link">&para;</a></h2>
+<p><code>ask()</code>/<code>ask_async()</code> take a <code>reasoning: bool = False</code> keyword. When
+<code>True</code>, each provider that supports it enables extended/deliberate
+reasoning using its own real mechanism — nothing is simulated, and
+support is not uniform:</p>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th><code>reasoning=True</code> behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anthropic</td>
+<td>Extended thinking (<code>thinking={"type": "enabled", "budget_tokens": ...}</code>); default budget 1024, override with <code>thinking_budget=N</code>. Temperature is left unset, since the API rejects an override while thinking is enabled.</td>
+</tr>
+<tr>
+<td>OpenAI, and the 9 OpenAI-compatible vendors</td>
+<td><code>reasoning_effort="medium"</code> by default; override with <code>reasoning_effort="low"/"high"/...</code>. Support and accepted values depend on the specific model — an unsupported combination surfaces as a <code>ProviderError</code> from the vendor's own API.</td>
+</tr>
+<tr>
+<td>Gemini, Vertex AI</td>
+<td><code>thinking_config.thinking_budget=-1</code> (dynamic — model decides) by default; override with <code>thinking_budget=N</code> (or <code>0</code> to force off even when <code>reasoning=True</code>).</td>
+</tr>
+<tr>
+<td>Amazon Bedrock</td>
+<td>Same <code>thinking</code> field as native Anthropic, via <code>additionalModelRequestFields</code> — only applies to Claude models on Bedrock; other model families error from the API if it's not recognized.</td>
+</tr>
+<tr>
+<td>Azure, Mistral, Cohere, OCI</td>
+<td>Not supported — <code>reasoning=True</code> raises <code>ProviderNotFoundError</code> immediately rather than silently doing nothing.</td>
+</tr>
+</tbody>
+</table>
+<p><code>reasoning=False</code> (the default) leaves every provider's existing
+non-reasoning behavior completely unchanged.</p>
+<h2 id="a-note-on-vertex-ai-and-oci-model-ids">A note on Vertex AI and OCI model IDs<a class="headerlink" href="#a-note-on-vertex-ai-and-oci-model-ids" title="Permanent link">&para;</a></h2>
+<p><strong>Vertex AI</strong> serves the exact same Gemini model ID strings as the native
+<code>gemini</code> provider (e.g. <code>gemini-2.5-pro</code> means the same thing to both).
+<strong>OCI</strong> uses <code>vendor.model-name</code> IDs (<code>meta.llama-3.3-70b-instruct</code>)
+that share the <code>meta.</code> vendor prefix with Bedrock's own re-hosted model
+namespace. Since anyask has no auto-routing to begin with, this is never
+ambiguous in practice — you always select <code>provider="vertexai"</code> or
+<code>provider="oci"</code> explicitly — but it's worth knowing if you're
+cross-referencing model IDs between providers.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.sections", "navigation.expand", "content.code.copy", "content.code.annotate", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
