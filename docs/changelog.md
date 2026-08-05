@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+- Simplified `README.md`: restructured around description / features /
+  installation / supported providers / what is anyask / why do you need
+  anyask, trimming the detailed API/Errors/CLI reference sections down to
+  pointers at the hosted docs (`docs/reference`, `docs/cli`,
+  `docs/providers` already cover that ground) instead of duplicating it.
+
 ## [0.2.0] - 2026-08-05
 
 ### Added
