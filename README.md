@@ -62,9 +62,9 @@ A single-responsibility package for one job: call an LLM provider, get its raw
 response back. `prompt` is always a plain string and `AskResponse.content` is
 always a plain string — no multi-turn history, no system prompts, no
 multi-modal input/output, no streaming. That narrow contract is deliberate,
-not a missing feature — see [SPEC.md](SPEC.md) for the full design and
-[SPEC.md's out-of-scope list](SPEC.md#10-explicitly-out-of-scope) for exactly
-what's excluded and why.
+not a missing feature — see [SPEC.md](https://github.com/Geeks-Trident-LLC/anyask/blob/main/SPEC.md)
+for the full design and [SPEC.md's out-of-scope list](https://github.com/Geeks-Trident-LLC/anyask/blob/main/SPEC.md#10-explicitly-out-of-scope)
+for exactly what's excluded and why.
 
 ## Why do you need anyask
 

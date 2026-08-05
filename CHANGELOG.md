@@ -14,6 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   pointers at the hosted docs (`docs/reference`, `docs/cli`,
   `docs/providers` already cover that ground) instead of duplicating it.
 
+### Fixed
+- `README.md`'s `SPEC.md` links used repo-relative paths, which break on
+  PyPI (README.md also serves as the PyPI project description, and PyPI
+  has no repo tree to resolve a relative link against — it just 404s).
+  Switched to absolute GitHub blob URLs, matching the pattern already
+  used for the same file in `docs/index.md`.
+
 ## [0.2.0] - 2026-08-05
 
 ### Added
