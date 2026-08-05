@@ -111,10 +111,6 @@ tox-typecheck:
 # -----------------------------
 # Version checks
 # -----------------------------
-verify-version:
-	@echo "Checking version consistency..."
-	@python scripts/verify-version.py
-
 test-version:
 	pytest -q tests/unit/test_version_consistency.py
 
@@ -122,4 +118,4 @@ test-version:
     release-test release-prod release \
     bump-patch bump-minor bump-major \
     tox tox-lint tox-typecheck \
-    verify-version test-version
+    test-version

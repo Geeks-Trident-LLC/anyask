@@ -1,12 +1,4 @@
 repos:
-  - repo: local
-    hooks:
-      - id: verify-version
-        name: Verify version consistency
-        entry: python scripts/verify-version.py
-        language: system
-        types: [python]
-
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.4.8
     hooks:
