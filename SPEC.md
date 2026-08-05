@@ -21,6 +21,19 @@ package whose contract is "one function, any provider, raw response." Callers wh
 want routing/fallback/retry build it on top, using `anyask` as the uniform
 transport underneath.
 
+**Lightweight installation is a strategic pillar of that scope, not a side
+effect.** A bare `pip install anyask` pulls in exactly one dependency
+(`PyYAML`); using one specific provider adds only that provider's own SDK,
+never the other 16. That's what a single-responsibility footprint should look
+like — a package doing one job doesn't need one-of-everything installed to do
+it. In practice that makes `anyask` cheap to bake into a container image, fast
+to install in a CI job, and safe to pull in as a transitive dependency without
+dragging in SDKs nothing downstream ever touches — the same property that
+makes it a good fit for ephemeral or CI/CD environments generally, whatever a
+given project's own testing setup looks like. See
+[Dependency Footprint](docs/guides/dependency-footprint.md) for measured
+install sizes per provider.
+
 ## 2. Design Principles
 
 1. **Explicit over implicit.** `provider` and `model` are always required,
@@ -280,9 +293,8 @@ successfully," not "a live call would succeed." Full reference:
 ## 9. Versioning & release process
 
 `bump2version` keeps `pyproject.toml`, `anyask/__init__.py`, and
-`.bumpversion.cfg` in sync in one commit+tag; `tests/unit/test_version_consistency.py`
-is the CI-enforced safety net against drift (a manual edit, a bad merge, a partial
-bump).
+`.bumpversion.cfg` in sync in one commit + tag, whenever a
+`bump-patch`/`bump-minor`/`bump-major` step runs.
 
 ```mermaid
 flowchart LR
