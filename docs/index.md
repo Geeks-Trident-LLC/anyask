@@ -52,6 +52,31 @@ It is designed for:
   this provider's SDK installed and its credentials set," without making
   a network call
 
+## What anyask does (and doesn't) do
+
+`prompt` is always a plain string; `AskResponse.content` is always a plain
+string. That single-string-in, single-string-out contract is what "raw
+response, one function, no magic" means in practice, and it draws a hard
+line around the scope:
+
+**Does:** one text prompt → one text completion, the same call signature
+across all 18 providers, with provider-native extras (`temperature`,
+`max_tokens`, `reasoning`, and anything else a given provider's SDK call
+accepts) reachable via `**kwargs`, and everything else the SDK response
+carries reachable via `AskResponse.raw`.
+
+**Doesn't:** multi-turn conversations (no `messages=[...]` history — every
+`ask()` is one independent turn), system prompts (not part of the
+contract — a few providers happen to accept one through a provider-specific
+`**kwargs` name, like Anthropic's/Bedrock's `system=` or Gemini's
+`system_instruction=`, but that's incidental, not guaranteed, and silently
+doesn't work on the rest), multi-modal input (text only — no images, audio,
+or files), structured/multi-modal output (`content` is always plain text;
+tool calls or other structured parts are only reachable via `raw`), or
+streaming (not implemented by any provider yet). See
+[SPEC.md's out-of-scope list](https://github.com/Geeks-Trident-LLC/anyask/blob/main/SPEC.md#10-explicitly-out-of-scope)
+for the full picture.
+
 ## Explore the Docs
 
 - [Installation](getting-started/installation.md)
@@ -60,3 +85,4 @@ It is designed for:
 - [CLI Guide](cli/index.md)
 - [Dependency Footprint](guides/dependency-footprint.md)
 - [API Reference](reference/index.md)
+- [SPEC.md](https://github.com/Geeks-Trident-LLC/anyask/blob/main/SPEC.md) — architecture, diagrams, design principles

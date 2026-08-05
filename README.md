@@ -22,6 +22,32 @@ print(response.provider)         # "anthropic"
 print(response.model)            # "claude-haiku-4-5-20251001"
 ```
 
+## What anyask does (and doesn't) do
+
+`prompt` is always a plain string; `AskResponse.content` is always a plain string.
+That single-string-in, single-string-out contract is what "raw response, one
+function, no magic" means in practice.
+
+**Does:** one text prompt → one text completion, the same signature across all 18
+providers, with provider-native extras (`temperature`, `max_tokens`, `reasoning`,
+anything else a given provider's SDK call accepts) reachable via `**kwargs`, and
+everything else the SDK response carries reachable via `AskResponse.raw`.
+
+**Doesn't:**
+- **Multi-turn conversations** - no `messages=[...]` history, no session state;
+  every `ask()` is one independent turn.
+- **System prompts** - not part of the contract. A few providers happen to accept
+  one through a provider-specific `**kwargs` name (Anthropic's/Bedrock's `system=`,
+  Gemini's `system_instruction=`), but that's incidental provider behavior, not
+  something anyask guarantees or normalizes - it silently doesn't work on the rest.
+- **Multi-modal input** - text only, no images/audio/files.
+- **Structured/multi-modal output** - `content` is always plain text; tool calls or
+  other structured response parts are only reachable via `raw`, not a normalized field.
+- **Streaming** - not implemented by any provider yet.
+
+See [SPEC.md's out-of-scope list](SPEC.md#10-explicitly-out-of-scope) for the full
+picture, including *why* each of these stays out (or isn't in yet).
+
 ## Documentation
 
 Full documentation, including the [Providers](https://geeks-trident-llc.github.io/anyask/latest/providers/)

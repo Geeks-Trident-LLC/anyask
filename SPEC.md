@@ -324,3 +324,14 @@ here so they're a deliberate decision, not a gap:
 - **Prompt/template management, multi-turn conversation state, agent
   orchestration** — all out of scope by design; `ask()` takes a single prompt
   string and returns a single response, nothing stateful in between.
+- **System prompts** — not part of the contract; `prompt` is always the whole
+  message. A few providers happen to accept one through a provider-specific
+  `**kwargs` name (Anthropic's/Bedrock's `system=`, Gemini's
+  `system_instruction=`), since those pass straight through to the
+  underlying SDK call, but that's incidental provider behavior, not
+  something anyask guarantees or normalizes across providers.
+- **Multi-modal input/output** — `prompt` is always plain text and
+  `AskResponse.content` is always plain text; no images, audio, files, or
+  structured response parts. Anything a provider's raw response carries
+  beyond that is still reachable via `AskResponse.raw`, just not through a
+  normalized field.

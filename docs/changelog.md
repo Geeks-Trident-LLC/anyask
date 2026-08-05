@@ -8,6 +8,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- `SPEC.md` — architecture, the full public API contract, and seven Mermaid
+  diagrams (component overview, a single `ask()` call as a sequence diagram,
+  lazy per-provider imports, the Provider/AskResponse/error class hierarchy,
+  the construction-kwargs split, the `reasoning=True` per-provider decision
+  flow, and the release pipeline), plus an explicit out-of-scope list.
+- "What anyask does (and doesn't) do" section in `README.md`/`docs/index.md`:
+  documents that `prompt`/`AskResponse.content` are always plain strings, so
+  there's no multi-turn conversation state, no normalized system-prompt
+  support, no multi-modal input/output, and no streaming — spelled out
+  explicitly rather than left implicit.
+
+### Changed
+- `pyproject.toml`'s description now says "single text prompt" / "raw text
+  response" instead of just "raw response", matching the capabilities
+  clarification above.
+- Fixed the provider count from 17 to 18 everywhere (`pyproject.toml`,
+  `README.md`, `SPEC.md`, `CHANGELOG.md`, and three docs pages) — the actual
+  registry has 18 named vendor providers plus the internal `openai_compat`
+  base, which was never meant to be counted; "17" was wrong from the first
+  release and had just been copied forward since.
+
+### Removed
+- `scripts/verify-version.ps1` — unreferenced anywhere in the repo, and
+  unlike this repo's other `.ps1` scripts (which exist because their bash
+  counterparts need a native-PowerShell equivalent), `verify-version.py`
+  already runs identically on Windows with no bash dependency to work
+  around. Also a strictly weaker check (missing `.bumpversion.cfg`).
+- `scripts/verify-version.py` and its two references (the local pre-commit
+  hook, the Makefile's `verify-version` target). Version-drift detection
+  now relies solely on `tests/unit/test_version_consistency.py`, which
+  already runs automatically in CI via `tox` on every push.
+- `.pre-commit-config.yaml` — not installed (missing from the `dev` extra),
+  not documented, not invoked by CI. Everything it checked (ruff,
+  ruff-format, black, mypy) is the same tooling at the same pinned versions
+  already enforced via `tox -e lint/format/typecheck`.
+
+### Fixed
+- Replaced the `Makefile`'s `tomllib`/`tomli`-fallback version extraction
+  (which assumed `tomli` was installed on Python <3.11, but never declared
+  it as a dependency anywhere) and `scripts/release.ps1`'s equivalent (which
+  had no fallback at all) with a plain regex against the raw file text — no
+  stdlib-version gate, no extra dependency, and now also supports
+  single-quoted `version = '0.1.1'` in addition to double-quoted.
+
+## [0.1.1] - 2026-08-04
+
+### Added
 - `anyask` console script: `anyask --version`/`anyask version`, `anyask check
   <provider>` (construct one provider without a network call, reporting whether
   its SDK is installed and credentials resolve; exits 0/1), and `anyask ready`
@@ -30,15 +77,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   thinking field). Providers with no such mechanism (Azure, Mistral,
   Cohere, OCI) raise `ProviderNotFoundError` rather than silently
   ignoring it. See `docs/providers/index.md`'s Reasoning support table.
-
-### Changed
--
-
-### Fixed
--
-
-### Removed
--
 
 ## [0.1.0] - 2026-08-04
 
