@@ -1,9 +1,8 @@
 VERSION := $(shell python - <<'EOF'
-try:
-    import tomllib
-except ModuleNotFoundError:
-    import tomli as tomllib
-print(tomllib.load(open("pyproject.toml", "rb"))["project"]["version"])
+import re
+text = open("pyproject.toml").read()
+match = re.search("^version\\s*=\\s*['\"]([^'\"]+)['\"]", text, re.MULTILINE)
+print(match.group(1))
 EOF
 )
 

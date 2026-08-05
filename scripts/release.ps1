@@ -12,8 +12,10 @@ param(
 
 function Get-Version {
     @"
-import tomllib
-print(tomllib.load(open("pyproject.toml","rb"))["project"]["version"])
+import re
+text = open("pyproject.toml").read()
+match = re.search("^version\\s*=\\s*['\"]([^'\"]+)['\"]", text, re.MULTILINE)
+print(match.group(1))
 "@ | python
 }
 
