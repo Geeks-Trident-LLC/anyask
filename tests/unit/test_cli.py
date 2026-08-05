@@ -18,7 +18,7 @@ def test_main_version_command_prints_version(capsys):
     exit_code = cli.main(["version"])
 
     assert exit_code == 0
-    assert capsys.readouterr().out.strip() == f"anyask {__version__}"
+    assert capsys.readouterr().out.strip() == f"anyask v{__version__}"
 
 
 def test_main_dash_dash_version_flag(capsys):
@@ -26,7 +26,7 @@ def test_main_dash_dash_version_flag(capsys):
         cli.main(["--version"])
 
     assert exc_info.value.code == 0
-    assert capsys.readouterr().out.strip() == f"anyask {__version__}"
+    assert capsys.readouterr().out.strip() == f"anyask v{__version__}"
 
 
 # ------------------------------------------------------------

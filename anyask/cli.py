@@ -35,7 +35,7 @@ def _build_parser() -> argparse.ArgumentParser:
         prog="anyask",
         description="Call an LLM provider, get its raw response back.",
     )
-    parser.add_argument("--version", action="version", version=f"anyask {__version__}")
+    parser.add_argument("--version", action="version", version=f"anyask v{__version__}")
 
     subparsers = parser.add_subparsers(dest="command")
 
@@ -120,7 +120,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         return 0
 
     if args.command == "version":
-        print(f"anyask {__version__}")
+        print(f"anyask v{__version__}")
         return 0
 
     if args.command == "check":
