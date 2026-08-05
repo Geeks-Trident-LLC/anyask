@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   (sweep every provider using only environment-variable credentials; always
   exits 0 - a status report, not a gate). Built on stdlib `argparse`, not
   `click`, to keep the bare install at 2 packages.
-- Consistent `temperature=0.2`/`max_tokens=2048` defaults across all 17
+- Consistent `temperature=0.2`/`max_tokens=2048` defaults across all 18
   providers (previously only Anthropic, Mistral, Cohere, Bedrock, and
   OCI set these; OpenAI, the 9 OpenAI-compatible vendors, Gemini, Vertex
   AI, and Azure passed calls through with no default, meaning identical
@@ -45,7 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Added
 - Initial extraction release: `ask()`, `ask_async()`, `list_models()`,
   `list_models_async()`, and `get_provider()` — one normalized
-  `AskResponse` shape across 17 providers (OpenAI, Anthropic, Gemini,
+  `AskResponse` shape across 18 providers (OpenAI, Anthropic, Gemini,
   Vertex AI, Azure, Mistral, Bedrock, Cohere, OCI, and nine
   OpenAI-compatible vendors: DeepSeek, Groq, xAI, Together AI, Fireworks
   AI, Cerebras, Perplexity, OpenRouter, Moonshot)

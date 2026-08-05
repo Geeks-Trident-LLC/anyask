@@ -3,7 +3,7 @@
 A single-responsibility Python package for one job: call an LLM provider, get its raw
 response back. No routing, no fallback, no retries - you always name the provider and
 model explicitly, and you always get the same normalized `AskResponse` shape back
-regardless of which of the 17 supported vendors you called.
+regardless of which of the 18 supported vendors you called.
 
 ```python
 import anyask

@@ -214,7 +214,7 @@ classDiagram
 
 19 registry entries total: 18 concrete vendor providers + `openai_compat` itself
 (the internal generic base for arbitrary OpenAI-compatible endpoints, registered
-but not one of the 17 documented/named providers).
+but not one of the 18 documented/named providers).
 
 ## 5. Provider construction: the kwargs split
 
@@ -237,7 +237,7 @@ build once and call `generate_sync()`/`generate()` many times instead of paying
 SDK-client-construction cost on every single `ask()` call.
 
 `temperature=0.2`/`max_tokens=2048` are applied as defaults by every provider when
-not explicitly passed — consistent across all 17 providers, so identical `ask()`
+not explicitly passed — consistent across all 18 providers, so identical `ask()`
 calls don't silently get different sampling behavior depending on which vendor
 happens to be selected.
 
@@ -263,7 +263,7 @@ boolean only changes what happens when you *don't* specify one yourself.
 
 ## 7. Providers
 
-17 named providers, one interface. Full credential/env-var/default-model table:
+18 named providers, one interface. Full credential/env-var/default-model table:
 [docs/providers/index.md](docs/providers/index.md).
 
 | Auth shape | Providers |
@@ -281,7 +281,7 @@ the bare install at 2 packages):
 flowchart LR
     CLI["anyask"] --> Version["version / --version\nprint installed version"]
     CLI --> Check["check <provider>\nconstruct one provider,\nno network call\nexit 0/1"]
-    CLI --> Ready["ready\nsweep all 17 providers\nalways exits 0"]
+    CLI --> Ready["ready\nsweep all 18 providers\nalways exits 0"]
 ```
 
 `check`/`ready` never call a provider's API — they exercise the same

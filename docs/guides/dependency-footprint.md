@@ -1,6 +1,6 @@
 # Dependency Footprint
 
-`anyask` supports 17 LLM providers, but no single install needs all of
+`anyask` supports 18 LLM providers, but no single install needs all of
 their SDKs at once. `pip install anyask` installs only `PyYAML` (used by
 the built-in default-model catalog) — every provider SDK is an opt-in
 extra via `pip install anyask[<provider>]` (see

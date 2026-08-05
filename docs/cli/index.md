@@ -71,7 +71,7 @@ anyask ready
 Checks every registered provider using only its environment-variable
 credentials (no flags - use `check <provider>` to test explicit values).
 `ready` **always exits `0`** - it's a status report, not a gate. Most
-setups only configure a handful of the 17 providers, so a report full of
+setups only configure a handful of the 18 providers, so a report full of
 "credentials missing" lines for the rest is expected, not a failure.
 
 ## What `check`/`ready` don't verify

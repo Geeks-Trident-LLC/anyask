@@ -1,6 +1,6 @@
 # Providers
 
-anyask integrates 17 LLM providers behind one interface — `ask()`,
+anyask integrates 18 LLM providers behind one interface — `ask()`,
 `ask_async()`, `list_models()`, `list_models_async()`, and
 `get_provider()` all take the same `provider="..."` value. Most providers
 just need an API key; three cloud-gateway providers (Bedrock, Vertex AI,
@@ -11,7 +11,7 @@ There is no automatic routing or fallback anywhere in anyask — `provider`
 is always an explicit, required argument on every call.
 
 Every provider defaults `temperature=0.2` and `max_tokens=2048` when the
-call doesn't specify them — the same defaults across all 17 providers,
+call doesn't specify them — the same defaults across all 18 providers,
 overridable per call via `temperature=`/`max_tokens=` kwargs. The one
 exception: when `reasoning=True` on OpenAI or an OpenAI-compatible
 vendor, both defaults are skipped entirely rather than sent, since

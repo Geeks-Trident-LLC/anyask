@@ -3,7 +3,7 @@
 `anyask` is a single-responsibility Python package for one job: call an LLM
 provider, get its raw response back. No routing, no fallback, no retries —
 you always name the provider and model explicitly, and you always get the
-same normalized `AskResponse` shape back regardless of which of the 17
+same normalized `AskResponse` shape back regardless of which of the 18
 supported vendors you called.
 
 ```python
@@ -32,7 +32,7 @@ It is designed for:
 
 ## Features
 
-- One function, 17 vendors — `ask()`/`ask_async()` take the same
+- One function, 18 vendors — `ask()`/`ask_async()` take the same
   `provider="..."`/`model="..."` signature for OpenAI, Anthropic, Gemini,
   Vertex AI, Azure, Mistral, Bedrock, Cohere, OCI, and nine
   OpenAI-compatible vendors (DeepSeek, Groq, xAI, Together AI, Fireworks
@@ -40,7 +40,7 @@ It is designed for:
 - Frozen, normalized `AskResponse` — `content`, `usage`, `finish_reason`
   (kept raw and provider-specific, never coerced), `provider`, `model`,
   and the untouched `raw` SDK response
-- Lazy per-provider imports — installing none of the 17 provider extras
+- Lazy per-provider imports — installing none of the 18 provider extras
   still gives a fully working `import anyask`; each provider's SDK is
   only imported the moment it's actually used
 - No routing/fallback magic — you always name the provider and model;
